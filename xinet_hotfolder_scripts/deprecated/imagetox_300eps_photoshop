@@ -1,0 +1,4 @@
+#!/bin/csh -f
+set d=/galaxy/auto/testing
+/usr/etc/appletalk/imagetox -xeps80 -r300 "$1" | /sbin/sed 's/%%Creator: FullPress imagetox/%%Creator: Adobe Photoshop Version 8.0/g' > "$d/$2:r".eps
+chmod 777 "$d/$2:r".eps

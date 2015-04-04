@@ -1,0 +1,59 @@
+#!/bin/csh -f
+
+#### this script is designed to set parameters to allow for speed limiting due to time restrictions.
+echo start >> /usr/napc/rsync_scripts/gmassets.rsync.log
+date >> /usr/napc/rsync_scripts/gmassets.rsync.log
+
+set LOCALHST1="opus.stpl.schawk.com::mn_raid1/"
+set LOCALHST2="opus.stpl.schawk.com::mn_raid2/"          
+set REMOTEHST1="aardvark.mpls.schawk.com::galaxy/"
+set REMOTEHST2="aardvark.mpls.schawk.com::gal2/"
+set REMOTEHST3="aardvark.mpls.schawk.com::gal3/"
+
+date | awk '{print $4}' | sed 's/:/ /g'|awk '{print $1}' > /tmp/time
+
+set DAY = `cat /tmp/time |grep -f /usr/napc/rsync_scripts/day`
+set NITE = `cat /tmp/time |grep -f /usr/napc/rsync_scripts/nite`
+
+if ("X$DAY" != "X")  then
+
+echo Its daytime running rsync at reduced rate
+set RSYNC_ARGS="-ahvz"
+
+endif
+
+if ("X$NITE" != "X")  then
+
+echo Its Night running rsync at the full rate
+#set RSYNC_ARGS="-ahvz --delete --max-delete=20000"
+set RSYNC_ARGS="-ahvz"
+endif
+else
+set RSYNC_ARGS="-help"
+echo schawk.rsync failed
+echo failed >> /usr/napc/rsync_scripts/gmassets.rsync.log
+date >> /usr/napc/rsync_scripts/gmassets.rsync.log
+echo rsync failed > /usr/napc/rsync_scripts/gmassets.log
+date >> /usr/napc/rsync_scripts/gmassets.log
+echo  $RSYNC_ARGS
+endif
+
+echo rsync start > /usr/napc/rsync_scripts/gmassets.log
+date >> /usr/napc/rsync_scripts/gmassets.log
+
+##  example /usr/bin/rsync $RSYNC_ARGS $REMOTEHST/  $LOCALHST/ 
+
+## GM Assets
+/usr/bin/rsync $RSYNC_ARGS $REMOTEHST1/generalmills/ /mn_raid1/generalmills/ | tee /usr/napc/rsync_scripts/last.log
+echo /mn_raid1/generalmills/ >> /usr/napc/rsync_scripts/gmassets.log
+cat /usr/napc/rsync_scripts/last.log |grep sent >>  /usr/napc/rsync_scripts/gmassets.log
+cat /usr/napc/rsync_scripts/last.log |grep total >>  /usr/napc/rsync_scripts/gmassets.log
+cat /usr/napc/rsync_scripts/last.log |grep error >>  /usr/napc/rsync_scripts/gmassets.log
+
+echo end >> /usr/napc/rsync_scripts/gmassets.rsync.log
+date >> /usr/napc/rsync_scripts/gmassets.rsync.log
+
+echo rsync ends >> /usr/napc/rsync_scripts/gmassets.log
+date >> /usr/napc/rsync_scripts/gmassets.log
+
+/usr/bin/Mail -s opus.rsync.log dberks@schawk.com < /usr/napc/rsync_scripts/gmassets.log

@@ -1,0 +1,30 @@
+#!/bin/csh -f
+
+echo start >> /usr/napc/rsync_scripts/compare.rsync.log
+date >> /usr/napc/rsync_scripts/unilever.compare.log
+
+##set LOCALHST1="opus.stpl.schawk.com::mn_raid1/"
+##set LOCALHST2="opus.stpl.schawk.com::mn_raid2/"          
+##set REMOTEHST1="aardvark.mpls.schawk.com::galaxy/"
+##set REMOTEHST2="aardvark.mpls.schawk.com::gal2/"
+##set REMOTEHST2="opus.stpl.schawk.com::mn_raid2/"
+##set REMOTEHST3="aardvark.mpls.schawk.com::gal3/"
+
+date | awk '{print $4}' | sed 's/:/ /g'|awk '{print $1}' > /tmp/time
+
+set RSYNC_ARGS="-ahvz --dry-run"
+
+date > /usr/napc/rsync_scripts/compare.log
+##  example /usr/bin/rsync $RSYNC_ARGS $REMOTEHST/  $LOCALHST/ 
+
+/usr/bin/rsync $RSYNC_ARGS /mn_raid2/safetycopy.unilever/  /mn_raid2/current.unilever/ | tee /usr/napc/rsync_scripts/last.log
+
+echo /mn_raid2/unilever compare/ >> /usr/napc/rsync_scripts/compare.log
+cat /usr/napc/rsync_scripts/last.log |grep sent >>  /usr/napc/rsync_scripts/compare.log
+cat /usr/napc/rsync_scripts/last.log |grep total >>  /usr/napc/rsync_scripts/compare.log
+cat /usr/napc/rsync_scripts/last.log |grep error >>  /usr/napc/rsync_scripts/compare.log
+
+echo end >> /usr/napc/rsync_scripts/compare.rsync.log
+date >> /usr/napc/rsync_scripts/compare.rsync.log
+/usr/bin/Mail -s opus.rsync.log dberks@schawk.com < /usr/napc/rsync_scripts/compare.log
+/usr/bin/Mail -s opus.rsync.log dberks@schawk.com < /usr/napc/rsync_scripts/last.log

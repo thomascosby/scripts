@@ -1,0 +1,34 @@
+#!/bin/csh -f
+
+#### this script is designed to set parameters to allow for speed limiting due to time restrictions.
+echo start >> /usr/napc/rsync_scripts/venture.rsync.log
+date >> /usr/napc/rsync_scripts/venture.rsync.log
+
+#set LOCALHST1="opus.stpl.schawk.com::mn_raid1/"
+#set LOCALHST2="opus.stpl.schawk.com::mn_raid2/"
+
+set LOCALHST1="10.26.26.30::mn_raid1/"
+set LOCALHST2="10.26.26.30::mn_raid2/"           
+set REMOTEHST1="aardvark.mpls.schawk.com::galaxy/"
+set REMOTEHST2="aardvark.mpls.schawk.com::gal2/"
+set REMOTEHST3="aardvark.mpls.schawk.com::gal3/"
+
+date | awk '{print $4}' | sed 's/:/ /g'|awk '{print $1}' > /tmp/time
+
+#set RSYNC_ARGS="-ahvz --delete --max-delete=20000"
+set RSYNC_ARGS="-av --progress"
+
+echo rsync start > /usr/napc/rsync_scripts/daily.log
+date >> /usr/napc/rsync_scripts/daily.log
+
+##  example /usr/bin/rsync $RSYNC_ARGS $REMOTEHST/  $LOCALHST/ 
+
+/usr/bin/rsync $RSYNC_ARGS $REMOTEHST2/venture/  /mn_raid1/venture.temp/ | tee /usr/napc/rsync_scripts/venture.rsyncrunning.log
+
+echo venture end >> /usr/napc/rsync_scripts/venture.rsync.log
+date >> /usr/napc/rsync_scripts/venture.inc.log
+
+echo rsync ends >> /usr/napc/rsync_scripts/venture.log
+date >> /usr/napc/rsync_scripts/venture.log
+
+

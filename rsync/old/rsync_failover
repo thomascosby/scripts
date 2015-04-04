@@ -1,0 +1,19 @@
+#!/bin/bash
+rsync -axv --delete /usr/etc/appletalk/ 10.26.26.32::FPapp/ > /usr/napc/rsyncs/logs/rsync_root.lastlog
+rsync -axv --delete /usr/etc/webnative/ 10.26.26.32::WNapp/ >> /usr/napc/rsyncs/logs/rsync_root.lastlog
+rsync -axv --delete /var/adm/webnative/ 10.26.26.32::WNconfig/ >> /usr/napc/rsyncs/logs/rsync_root.lastlog
+rsync -axv --delete /var/adm/appletalk/ 10.26.26.32::FPconfig/ >> /usr/napc/rsyncs/logs/rsync_root.lastlog
+rsync -axv --delete /etc/passwd 10.26.26.32::etc/ >> /usr/napc/rsyncs/logs/rsync_root.lastlog
+rsync -axv --delete /etc/shadow 10.26.26.32::etc/ >> /usr/napc/rsyncs/logs/rsync_root.lastlog
+rsync -axv --delete /etc/group 10.26.26.32::etc/ >> /usr/napc/rsyncs/logs/rsync_root.lastlog
+rsync -axv --delete /etc/gshadow 10.26.26.32::etc/ >> /usr/napc/rsyncs/logs/rsync_root.lastlog
+rsync -axv --delete /etc/samba/ 10.26.26.32::samba/ >> /usr/napc/rsyncs/logs/rsync_root.lastlog
+rsync -av /etc/printcap 10.26.26.32::etc/printcap >> /usr/napc/rsyncs/logs/rsync_root.lastlog
+rsync -axv --exclude="license" --exclude='rsyncs/logs' --delete /usr/napc/ 10.26.26.32::napc/ >> /usr/napc/rsyncs/logs/rsync_root.lastlog
+rsync -axv --delete /var/www/html/ 10.26.26.32::html/ >> /usr/napc/rsyncs/logs/rsync_root.lastlog
+rsync -axv --delete /etc/httpd/conf/ 10.26.26.32::etc/httpd/conf/ >> /usr/napc/rsyncs/logs/rsync_root.lastlog
+rsync -axv --delete --exclude='cron' --exclude='mail' --exclude='mqueue' --exclude='clientmqueue' /var/spool/ 10.26.26.32::spool/ >> /usr/napc/rsyncs/logs/rsync_root.lastlog
+rsync -av --delete /etc/cups/ 10.26.26.32::cups/ >> /usr/napc/rsyncs/logs/rsync_root.lastlog
+date >> /usr/napc/rsyncs/logs/rsync_root.dates
+rsync -av /usr/napc/rsyncs/logs/rsync_root.lastlog 10.26.26.32::napc/rsyncs/logs/rsync_root.lastlog
+rsync -av /usr/napc/rsyncs/logs/rsync_root.dates 10.26.26.32::napc/rsyncs/logs/rsync_root.dates

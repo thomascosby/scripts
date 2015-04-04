@@ -1,0 +1,5 @@
+#!/bin/sh -f
+#set name=`basename $1`
+sleep 10
+mv /mnt/pcc/Intel_Mac/aardvark-ps-out/`basename $1` /mnt/pcc/Intel_Mac/Hotfolders/PSTI/
+exit $status

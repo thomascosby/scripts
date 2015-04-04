@@ -1,0 +1,11 @@
+#!
+#
+date >> /r2/input_output/Output\ Files/top\ output.txt
+echo "" >> /r2/input_output/Output\ Files/top\ output.txt
+top -n 1 -b -d 2 | head -n 30 >> /r2/input_output/Output\ Files/top\ output.txt
+echo "" >> /r2/input_output/Output\ Files/top\ output.txt
+echo "" >> /r2/input_output/Output\ Files/top\ output.txt
+#
+date >> /r2/input_output/Output\ Files/ps\ output.txt
+ps -ef | grep 'dblogd' | grep -v 'grep' >> /r2/input_output/Output\ Files/ps\ output.txt >> /r2/input_output/Output\ Files/ps\ output.txt
+echo "" >> /r2/input_output/Output\ Files/ps\ output.txt

@@ -1,0 +1,304 @@
+#!/bin/bash
+#
+# copies jobs in each client Archive Staging folder to the appropriate client Job Archive
+# then sets restricted perms on the Archive folders
+#
+# Dan B - v1.0 - 02.05.12
+# Dan B - v1.01 - 03.26.13 - bug fixes and new Archive locations
+# Dan B - v1.02 - 06.06.13 - improved logging
+# Dan B - v1.03 - 08.29.13 - logging changes, fixed "PetSmart"
+# Dan B - v1.04 - 09.13.13 - added cmds to reset ownership & perms on the archives after the copy
+
+echo
+echo "This script copies the contents of the client Archive Staging"
+echo "folders to the appropriate Jobs Archive/year folders."
+echo
+read -p "Are you sure you want to proceed? (y/n) " -n 1
+echo
+if [[ ! $REPLY =~ ^[Yy]$ ]]
+then
+    exit 1
+fi
+
+LOGPATH="/usr/schawk/logs/archiving/archive.log"
+
+echo "### ARCHIVE COPYING BEGINS: "`date`" ###" >> $LOGPATH;echo "" >> $LOGPATH
+
+##################################
+#  3M                            #
+################################## 
+echo "*** Copying 3M Archive Staging to Archive ***" >> $LOGPATH
+DIRS_ARC_STG=`ls -1 /r2/3mjobs/3M\ Jobs\ WIP/Archive\ Staging/ | wc -l`
+DIRS_ARC_YR_BEF=`ls -1 /s2/jobsarchive/3marchive/Jobs\ Archive/2013 | wc -l`
+THISTIME=`(time /bin/cp -rfp /r2/3mjobs/3M\ Jobs\ WIP/Archive\ Staging/* /s2/jobsarchive/3marchive/Jobs\ Archive/2013/) 2>&1 | grep real`
+REALTIME=`(echo $THISTIME | cut -f 2 -d ' ')`
+echo "    Copy Completed in "$REALTIME" ***" >> $LOGPATH
+DIRS_ARC_YR_AFT=`ls -1 /s2/jobsarchive/3marchive/Jobs\ Archive/2013 | wc -l`
+DIRS_COPIED=$((DIRS_ARC_YR_AFT-DIRS_ARC_YR_BEF))
+echo "    ITEMS IN ARCHIVE STAGING: "$DIRS_ARC_STG >> $LOGPATH
+echo "    ITEMS ADDED TO ARCHIVE: "$DIRS_COPIED >> $LOGPATH
+echo >> $LOGPATH
+##################################
+#  CENTRAL GARDEN                #
+################################## 
+echo "*** Copying Central Garden Archive Staging to Archive ***" >> $LOGPATH
+DIRS_ARC_STG=`ls -1 /r2/centralgardenjobs/Central\ Garden\ Jobs\ WIP/Archive\ Staging/ | wc -l`
+DIRS_ARC_YR_BEF=`ls -1 /s2/jobsarchive/centralgardenarchive/Jobs\ Archive/2013 | wc -l`
+THISTIME=`(time /bin/cp -rfp /r2/centralgardenjobs/Central\ Garden\ Jobs\ WIP/Archive\ Staging/* /s2/jobsarchive/centralgardenarchive/Jobs\ Archive/2013/) 2>&1 | grep real`
+REALTIME=`(echo $THISTIME | cut -f 2 -d ' ')`
+echo "    Copy Completed in "$REALTIME" ***" >> $LOGPATH
+DIRS_ARC_YR_AFT=`ls -1 /s2/jobsarchive/centralgardenarchive/Jobs\ Archive/2013 | wc -l`
+DIRS_COPIED=$((DIRS_ARC_YR_AFT-DIRS_ARC_YR_BEF))
+echo "    ITEMS IN ARCHIVE STAGING: "$DIRS_ARC_STG >> $LOGPATH
+echo "    ITEMS ADDED TO ARCHIVE: "$DIRS_COPIED >> $LOGPATH
+echo >> $LOGPATH
+##################################
+#  CON AGRA                      #
+################################## 
+echo "*** Copying Con Agra Archive Staging to Archive ***" >> $LOGPATH
+DIRS_ARC_STG=`ls -1 /r2/conagrajobs/Con\ Agra\ Jobs\ WIP/Archive\ Staging/ | wc -l`
+DIRS_ARC_YR_BEF=`ls -1 /s2/jobsarchive/conagraarchive/Jobs\ Archive/2013 | wc -l`
+THISTIME=`(time /bin/cp -rfp /r2/conagrajobs/Con\ Agra\ Jobs\ WIP/Archive\ Staging/* /s2/jobsarchive/conagraarchive/Jobs\ Archive/2013/) 2>&1 | grep real`
+REALTIME=`(echo $THISTIME | cut -f 2 -d ' ')`
+echo "    Copy Completed in "$REALTIME" ***" >> $LOGPATH
+DIRS_ARC_YR_AFT=`ls -1 /s2/jobsarchive/conagraarchive/Jobs\ Archive/2013 | wc -l`
+DIRS_COPIED=$((DIRS_ARC_YR_AFT-DIRS_ARC_YR_BEF))
+echo "    ITEMS IN ARCHIVE STAGING: "$DIRS_ARC_STG >> $LOGPATH
+echo "    ITEMS ADDED TO ARCHIVE: "$DIRS_COPIED >> $LOGPATH
+echo >> $LOGPATH
+##################################
+#  DIAL                          #
+################################## 
+echo "*** Copying Dial Archive Staging to Archive ***" >> $LOGPATH
+DIRS_ARC_STG=`ls -1 /r2/dialjobs/Dial\ Jobs\ WIP/Archive\ Staging/ | wc -l`
+DIRS_ARC_YR_BEF=`ls -1 /s2/jobsarchive/dialarchive/Jobs\ Archive/2013 | wc -l`
+THISTIME=`(time /bin/cp -rfp /r2/dialjobs/Dial\ Jobs\ WIP/Archive\ Staging/* /s2/jobsarchive/dialarchive/Jobs\ Archive/2013/) 2>&1 | grep real`
+REALTIME=`(echo $THISTIME | cut -f 2 -d ' ')`
+echo "    Copy Completed in "$REALTIME" ***" >> $LOGPATH
+DIRS_ARC_YR_AFT=`ls -1 /s2/jobsarchive/dialarchive/Jobs\ Archive/2013 | wc -l`
+DIRS_COPIED=$((DIRS_ARC_YR_AFT-DIRS_ARC_YR_BEF))
+echo "    ITEMS IN ARCHIVE STAGING: "$DIRS_ARC_STG >> $LOGPATH
+echo "    ITEMS ADDED TO ARCHIVE: "$DIRS_COPIED >> $LOGPATH
+echo >> $LOGPATH
+##################################
+#  DIAMOND FOODS                 #
+################################## 
+echo "*** Copying Diamond Foods Archive Staging to Archive ***" >> $LOGPATH
+DIRS_ARC_STG=`ls -1 /r2/diamondfoodsjobs/Diamond\ Foods\ Jobs\ WIP/Archive\ Staging/ | wc -l`
+DIRS_ARC_YR_BEF=`ls -1 /s2/jobsarchive/diamondfoodsarchive/Jobs\ Archive/2013 | wc -l`
+THISTIME=`(time /bin/cp -rfp /r2/diamondfoodsjobs/Diamond\ Foods\ Jobs\ WIP/Archive\ Staging/* /s2/jobsarchive/diamondfoodsarchive/Jobs\ Archive/2013/) 2>&1 | grep real`
+REALTIME=`(echo $THISTIME | cut -f 2 -d ' ')`
+echo "    Copy Completed in "$REALTIME" ***" >> $LOGPATH
+DIRS_ARC_YR_AFT=`ls -1 /s2/jobsarchive/diamondfoodsarchive/Jobs\ Archive/2013 | wc -l`
+DIRS_COPIED=$((DIRS_ARC_YR_AFT-DIRS_ARC_YR_BEF))
+echo "    ITEMS IN ARCHIVE STAGING: "$DIRS_ARC_STG >> $LOGPATH
+echo "    ITEMS ADDED TO ARCHIVE: "$DIRS_COPIED >> $LOGPATH
+echo >> $LOGPATH
+##################################
+#  DOLLAR GENERAL                #
+################################## 
+echo "*** Copying Dollar General Archive Staging to Archive ***" >> $LOGPATH
+DIRS_ARC_STG=`ls -1 /r2/dollargeneraljobs/Dollar\ General\ Jobs\ WIP/Archive\ Staging/ | wc -l`
+DIRS_ARC_YR_BEF=`ls -1 /s2/jobsarchive/dollargeneralarchive/Jobs\ Archive/2013 | wc -l`
+THISTIME=`(time /bin/cp -rfp /r2/dollargeneraljobs/Dollar\ General\ Jobs\ WIP/Archive\ Staging/* /s2/jobsarchive/dollargeneralarchive/Jobs\ Archive/2013/) 2>&1 | grep real`
+REALTIME=`(echo $THISTIME | cut -f 2 -d ' ')`
+echo "    Copy Completed in "$REALTIME" ***" >> $LOGPATH
+DIRS_ARC_YR_AFT=`ls -1 /s2/jobsarchive/dollargeneralarchive/Jobs\ Archive/2013 | wc -l`
+DIRS_COPIED=$((DIRS_ARC_YR_AFT-DIRS_ARC_YR_BEF))
+echo "    ITEMS IN ARCHIVE STAGING: "$DIRS_ARC_STG >> $LOGPATH
+echo "    ITEMS ADDED TO ARCHIVE: "$DIRS_COPIED >> $LOGPATH
+echo >> $LOGPATH
+##################################
+#  FAMILY DOLLAR                 #
+################################## 
+echo "*** Copying Family Dollar Archive Staging to Archive ***" >> $LOGPATH
+DIRS_ARC_STG=`ls -1 /r2/familydollarjobs/Family\ Dollar\ Jobs\ WIP/Archive\ Staging/ | wc -l`
+DIRS_ARC_YR_BEF=`ls -1 /s2/jobsarchive/familydollararchive/Jobs\ Archive/2013 | wc -l`
+THISTIME=`(time /bin/cp -rfp /r2/familydollarjobs/Family\ Dollar\ Jobs\ WIP/Archive\ Staging/* /s2/jobsarchive/familydollararchive/Jobs\ Archive/2013/) 2>&1 | grep real`
+REALTIME=`(echo $THISTIME | cut -f 2 -d ' ')`
+echo "    Copy Completed in "$REALTIME" ***" >> $LOGPATH
+DIRS_ARC_YR_AFT=`ls -1 /s2/jobsarchive/familydollararchive/Jobs\ Archive/2013 | wc -l`
+DIRS_COPIED=$((DIRS_ARC_YR_AFT-DIRS_ARC_YR_BEF))
+echo "    ITEMS IN ARCHIVE STAGING: "$DIRS_ARC_STG >> $LOGPATH
+echo "    ITEMS ADDED TO ARCHIVE: "$DIRS_COPIED >> $LOGPATH
+echo >> $LOGPATH
+##################################
+#  FARIBAULT FOODS               #
+################################## 
+echo "*** Copying Faribault Foods Archive Staging to Archive ***" >> $LOGPATH
+DIRS_ARC_STG=`ls -1 /r2/faribaultfoodsjobs/Faribault\ Foods\ Jobs\ WIP/Archive\ Staging/ | wc -l`
+DIRS_ARC_YR_BEF=`ls -1 /s2/jobsarchive/faribaultfoodsarchive/Jobs\ Archive/2013 | wc -l`
+THISTIME=`(time /bin/cp -rfp /r2/faribaultfoodsjobs/Faribault\ Foods\ Jobs\ WIP/Archive\ Staging/* /s2/jobsarchive/faribaultfoodsarchive/Jobs\ Archive/2013/) 2>&1 | grep real`
+REALTIME=`(echo $THISTIME | cut -f 2 -d ' ')`
+echo "    Copy Completed in "$REALTIME" ***" >> $LOGPATH
+DIRS_ARC_YR_AFT=`ls -1 /s2/jobsarchive/faribaultfoodsarchive/Jobs\ Archive/2013 | wc -l`
+DIRS_COPIED=$((DIRS_ARC_YR_AFT-DIRS_ARC_YR_BEF))
+echo "    ITEMS IN ARCHIVE STAGING: "$DIRS_ARC_STG >> $LOGPATH
+echo "    ITEMS ADDED TO ARCHIVE: "$DIRS_COPIED >> $LOGPATH
+echo >> $LOGPATH
+##################################
+#  GHB                           #
+################################## 
+echo "*** Copying GHB Archive Staging to Archive ***" >> $LOGPATH
+DIRS_ARC_STG=`ls -1 /r2/ghbjobs/GHB\ Jobs\ WIP/Archive\ Staging/ | wc -l`
+DIRS_ARC_YR_BEF=`ls -1 /s2/jobsarchive/ghbarchive/Jobs\ Archive/2013 | wc -l`
+THISTIME=`(time /bin/cp -rfp /r2/ghbjobs/GHB\ Jobs\ WIP/Archive\ Staging/* /s2/jobsarchive/ghbarchive/Jobs\ Archive/2013/) 2>&1 | grep real`
+REALTIME=`(echo $THISTIME | cut -f 2 -d ' ')`
+echo "    Copy Completed in "$REALTIME" ***" >> $LOGPATH
+DIRS_ARC_YR_AFT=`ls -1 /s2/jobsarchive/ghbarchive/Jobs\ Archive/2013 | wc -l`
+DIRS_COPIED=$((DIRS_ARC_YR_AFT-DIRS_ARC_YR_BEF))
+echo "    ITEMS IN ARCHIVE STAGING: "$DIRS_ARC_STG >> $LOGPATH
+echo "    ITEMS ADDED TO ARCHIVE: "$DIRS_COPIED >> $LOGPATH
+echo >> $LOGPATH
+##################################
+#  HENKEL                        #
+################################## 
+echo "*** Copying Henkel Archive Staging to Archive ***" >> $LOGPATH
+DIRS_ARC_STG=`ls -1 /r2/henkeljobs/Henkel\ Jobs\ WIP/Archive\ Staging/ | wc -l`
+DIRS_ARC_YR_BEF=`ls -1 /s2/jobsarchive/henkelarchive/Jobs\ Archive/2013 | wc -l`
+THISTIME=`(time /bin/cp -rfp /r2/henkeljobs/Henkel\ Jobs\ WIP/Archive\ Staging/* /s2/jobsarchive/henkelarchive/Jobs\ Archive/2013/) 2>&1 | grep real`
+REALTIME=`(echo $THISTIME | cut -f 2 -d ' ')`
+echo "    Copy Completed in "$REALTIME" ***" >> $LOGPATH
+DIRS_ARC_YR_AFT=`ls -1 /s2/jobsarchive/henkelarchive/Jobs\ Archive/2013 | wc -l`
+DIRS_COPIED=$((DIRS_ARC_YR_AFT-DIRS_ARC_YR_BEF))
+echo "    ITEMS IN ARCHIVE STAGING: "$DIRS_ARC_STG >> $LOGPATH
+echo "    ITEMS ADDED TO ARCHIVE: "$DIRS_COPIED >> $LOGPATH
+echo >> $LOGPATH
+##################################
+#  HORMEL                        #
+################################## 
+echo "*** Copying Hormel Archive Staging to Archive ***" >> $LOGPATH
+DIRS_ARC_STG=`ls -1 /r2/hormeljobs/Hormel\ Jobs\ WIP/Archive\ Staging/ | wc -l`
+DIRS_ARC_YR_BEF=`ls -1 /s2/jobsarchive/hormelarchive/Jobs\ Archive/2013 | wc -l`
+THISTIME=`(time /bin/cp -rfp /r2/hormeljobs/Hormel\ Jobs\ WIP/Archive\ Staging/* /s2/jobsarchive/hormelarchive/Jobs\ Archive/2013/) 2>&1 | grep real`
+REALTIME=`(echo $THISTIME | cut -f 2 -d ' ')`
+echo "    Copy Completed in "$REALTIME" ***" >> $LOGPATH
+DIRS_ARC_YR_AFT=`ls -1 /s2/jobsarchive/hormelarchive/Jobs\ Archive/2013 | wc -l`
+DIRS_COPIED=$((DIRS_ARC_YR_AFT-DIRS_ARC_YR_BEF))
+echo "    ITEMS IN ARCHIVE STAGING: "$DIRS_ARC_STG >> $LOGPATH
+echo "    ITEMS ADDED TO ARCHIVE: "$DIRS_COPIED >> $LOGPATH
+echo >> $LOGPATH
+##################################
+#  Mars                          #
+################################## 
+echo "*** Copying Mars Archive Staging to Archive ***" >> $LOGPATH
+DIRS_ARC_STG=`ls -1 /r2/marsjobs/Mars\ Jobs\ WIP/Archive\ Staging/ | wc -l`
+DIRS_ARC_YR_BEF=`ls -1 /s2/jobsarchive/marsarchive/Jobs\ Archive/2013 | wc -l`
+THISTIME=`(time /bin/cp -rfp /r2/marsjobs/Mars\ Jobs\ WIP/Archive\ Staging/* /s2/jobsarchive/marsarchive/Jobs\ Archive/2013/) 2>&1 | grep real`
+REALTIME=`(echo $THISTIME | cut -f 2 -d ' ')`
+echo "    Copy Completed in "$REALTIME" ***" >> $LOGPATH
+DIRS_ARC_YR_AFT=`ls -1 /s2/jobsarchive/marsarchive/Jobs\ Archive/2013 | wc -l`
+DIRS_COPIED=$((DIRS_ARC_YR_AFT-DIRS_ARC_YR_BEF))
+echo "    ITEMS IN ARCHIVE STAGING: "$DIRS_ARC_STG >> $LOGPATH
+echo "    ITEMS ADDED TO ARCHIVE: "$DIRS_COPIED >> $LOGPATH
+echo >> $LOGPATH
+##################################
+#  MERCK                         #
+################################## 
+echo "*** Copying Merck Archive Staging to Archive ***" >> $LOGPATH
+DIRS_ARC_STG=`ls -1 /r2/merckjobs/Merck\ Jobs\ WIP/Archive\ Staging/ | wc -l`
+DIRS_ARC_YR_BEF=`ls -1 /s2/jobsarchive/merckarchive/Jobs\ Archive/2013 | wc -l`
+THISTIME=`(time /bin/cp -rfp /r2/merckjobs/Merck\ Jobs\ WIP/Archive\ Staging/* /s2/jobsarchive/merckarchive/Jobs\ Archive/2013/) 2>&1 | grep real`
+REALTIME=`(echo $THISTIME | cut -f 2 -d ' ')`
+echo "    Copy Completed in "$REALTIME" ***" >> $LOGPATH
+DIRS_ARC_YR_AFT=`ls -1 /s2/jobsarchive/merckarchive/Jobs\ Archive/2013 | wc -l`
+DIRS_COPIED=$((DIRS_ARC_YR_AFT-DIRS_ARC_YR_BEF))
+echo "    ITEMS IN ARCHIVE STAGING: "$DIRS_ARC_STG >> $LOGPATH
+echo "    ITEMS ADDED TO ARCHIVE: "$DIRS_COPIED >> $LOGPATH
+echo >> $LOGPATH
+##################################
+#  NESTLE                        #
+################################## 
+echo "*** Copying Nestle Archive Staging to Archive ***" >> $LOGPATH
+DIRS_ARC_STG=`ls -1 /r2/nestlejobs/Nestle\ Jobs\ WIP/Archive\ Staging/ | wc -l`
+DIRS_ARC_YR_BEF=`ls -1 /s2/jobsarchive/nestlearchive/Jobs\ Archive/2013 | wc -l`
+THISTIME=`(time /bin/cp -rfp /r2/nestlejobs/Nestle\ Jobs\ WIP/Archive\ Staging/* /s2/jobsarchive/nestlearchive/Jobs\ Archive/2013/) 2>&1 | grep real`
+REALTIME=`(echo $THISTIME | cut -f 2 -d ' ')`
+echo "    Copy Completed in "$REALTIME" ***" >> $LOGPATH
+DIRS_ARC_YR_AFT=`ls -1 /s2/jobsarchive/nestlearchive/Jobs\ Archive/2013 | wc -l`
+DIRS_COPIED=$((DIRS_ARC_YR_AFT-DIRS_ARC_YR_BEF))
+echo "    ITEMS IN ARCHIVE STAGING: "$DIRS_ARC_STG >> $LOGPATH
+echo "    ITEMS ADDED TO ARCHIVE: "$DIRS_COPIED >> $LOGPATH
+echo >> $LOGPATH
+##################################
+#  OTHER CLIENTS                 #
+################################## 
+echo "*** Copying Other Clients Archive Staging to Archive ***" >> $LOGPATH
+DIRS_ARC_STG=`ls -1 /r2/otherclientsjobs/Other\ Clients\ Jobs\ WIP/Archive\ Staging/ | wc -l`
+DIRS_ARC_YR_BEF=`ls -1 /s2/jobsarchive/otherclientsarchive/Jobs\ Archive/2013 | wc -l`
+THISTIME=`(time /bin/cp -rfp /r2/otherclientsjobs/Other\ Clients\ Jobs\ WIP/Archive\ Staging/* /s2/jobsarchive/otherclientsarchive/Jobs\ Archive/2013/) 2>&1 | grep real`
+REALTIME=`(echo $THISTIME | cut -f 2 -d ' ')`
+echo "    Copy Completed in "$REALTIME" ***" >> $LOGPATH
+DIRS_ARC_YR_AFT=`ls -1 /s2/jobsarchive/otherclientsarchive/Jobs\ Archive/2013 | wc -l`
+DIRS_COPIED=$((DIRS_ARC_YR_AFT-DIRS_ARC_YR_BEF))
+echo "    ITEMS IN ARCHIVE STAGING: "$DIRS_ARC_STG >> $LOGPATH
+echo "    ITEMS ADDED TO ARCHIVE: "$DIRS_COPIED >> $LOGPATH
+echo >> $LOGPATH
+##################################
+#  PETSMART                      #
+################################## 
+echo "*** Copying Petsmart Archive Staging to Archive ***" >> $LOGPATH
+DIRS_ARC_STG=`ls -1 /r2/petsmartjobs/PetSmart\ Jobs\ WIP/Archive\ Staging/ | wc -l`
+DIRS_ARC_YR_BEF=`ls -1 /s2/jobsarchive/petsmartarchive/Jobs\ Archive/2013 | wc -l`
+THISTIME=`(time /bin/cp -rfp /r2/petsmartjobs/Petsmart\ Jobs\ WIP/Archive\ Staging/* /s2/jobsarchive/petsmartarchive/Jobs\ Archive/2013/) 2>&1 | grep real`
+REALTIME=`(echo $THISTIME | cut -f 2 -d ' ')`
+echo "    Copy Completed in "$REALTIME" ***" >> $LOGPATH
+DIRS_ARC_YR_AFT=`ls -1 /s2/jobsarchive/petsmartarchive/Jobs\ Archive/2013 | wc -l`
+DIRS_COPIED=$((DIRS_ARC_YR_AFT-DIRS_ARC_YR_BEF))
+echo "    ITEMS IN ARCHIVE STAGING: "$DIRS_ARC_STG >> $LOGPATH
+echo "    ITEMS ADDED TO ARCHIVE: "$DIRS_COPIED >> $LOGPATH
+echo >> $LOGPATH
+##################################
+#  PULMUONE                      #
+################################## 
+echo "*** Copying Pulmuone Archive Staging to Archive ***" >> $LOGPATH
+DIRS_ARC_STG=`ls -1 /r2/pulmuonejobs/Pulmuone\ Jobs\ WIP/Archive\ Staging/ | wc -l`
+DIRS_ARC_YR_BEF=`ls -1 /s2/jobsarchive/pulmuonearchive/Jobs\ Archive/2013 | wc -l`
+THISTIME=`(time /bin/cp -rfp /r2/pulmuonejobs/Pulmuone\ Jobs\ WIP/Archive\ Staging/* /s2/jobsarchive/pulmuonearchive/Jobs\ Archive/2013/) 2>&1 | grep real`
+REALTIME=`(echo $THISTIME | cut -f 2 -d ' ')`
+echo "    Copy Completed in "$REALTIME" ***" >> $LOGPATH
+DIRS_ARC_YR_AFT=`ls -1 /s2/jobsarchive/pulmuonearchive/Jobs\ Archive/2013 | wc -l`
+DIRS_COPIED=$((DIRS_ARC_YR_AFT-DIRS_ARC_YR_BEF))
+echo "    ITEMS IN ARCHIVE STAGING: "$DIRS_ARC_STG >> $LOGPATH
+echo "    ITEMS ADDED TO ARCHIVE: "$DIRS_COPIED >> $LOGPATH
+echo >> $LOGPATH
+##################################
+#  SAFEWAY                       #
+################################## 
+echo "*** Copying Safeway Archive Staging to Archive ***" >> $LOGPATH
+DIRS_ARC_STG=`ls -1 /r2/safewayjobs/Safeway\ Jobs\ WIP/Archive\ Staging/ | wc -l`
+DIRS_ARC_YR_BEF=`ls -1 /s2/jobsarchive/safewayarchive/Jobs\ Archive/2013 | wc -l`
+THISTIME=`(time /bin/cp -rfp /r2/safewayjobs/Safeway\ Jobs\ WIP/Archive\ Staging/* /s2/jobsarchive/safewayarchive/Jobs\ Archive/2013/) 2>&1 | grep real`
+REALTIME=`(echo $THISTIME | cut -f 2 -d ' ')`
+echo "    Copy Completed in "$REALTIME" ***" >> $LOGPATH
+DIRS_ARC_YR_AFT=`ls -1 /s2/jobsarchive/safewayarchive/Jobs\ Archive/2013 | wc -l`
+DIRS_COPIED=$((DIRS_ARC_YR_AFT-DIRS_ARC_YR_BEF))
+echo "    ITEMS IN ARCHIVE STAGING: "$DIRS_ARC_STG >> $LOGPATH
+echo "    ITEMS ADDED TO ARCHIVE: "$DIRS_COPIED >> $LOGPATH
+echo >> $LOGPATH
+##################################
+#  GENERAL MILLS                 #
+##################################         
+echo "*** Copying General Mills Archive Staging to Archive ***" >> $LOGPATH
+DIRS_ARC_STG=`ls -1 /r1/genmillsjobs/General\ Mills\ Jobs\ WIP/Archive\ Staging/ | wc -l`
+DIRS_ARC_YR_BEF=`ls -1 /s1/jobsarchive/genmillsarchive/Jobs\ Archive/2013 | wc -l`
+THISTIME=`(time /bin/cp -rfp /r1/genmillsjobs/General\ Mills\ Jobs\ WIP/Archive\ Staging/* /s1/jobsarchive/genmillsarchive/Jobs\ Archive/2013/) 2>&1 | grep real`
+REALTIME=`(echo $THISTIME | cut -f 2 -d ' ')`
+echo "    Copy Completed in "$REALTIME" ***" >> $LOGPATH
+DIRS_ARC_YR_AFT=`ls -1 /s1/jobsarchive/genmillsarchive/Jobs\ Archive/2013 | wc -l`
+DIRS_COPIED=$((DIRS_ARC_YR_AFT-DIRS_ARC_YR_BEF))
+echo "    ITEMS IN ARCHIVE STAGING: "$DIRS_ARC_STG >> $LOGPATH
+echo "    ITEMS ADDED TO ARCHIVE: "$DIRS_COPIED >> $LOGPATH
+echo >> $LOGPATH
+#
+### Set ownership and perms on the Archives
+echo "" >> $LOGPATH
+echo "*** Resetting Owner and Permissions on 2013 Job Archives ***" >> $LOGPATH
+echo "" >> $LOGPATH
+chown -R root:archivers /mn_san_arch*/jobsarchive/*archive/*Archive/2013
+chmod -R 755 /mn_san_arch*/jobsarchive/*archive/*Archive/2013
+
+echo "### ARCHIVE COPYING COMPLETE: "`date`" ###" >> $LOGPATH;echo "" >> $LOGPATH
+
+
+

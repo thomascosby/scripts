@@ -1,0 +1,8 @@
+#!
+# to be run by cron daily at midnight. Appends a datestamp line to the ongoing sar capture
+# For testing only - the cron for this should be REMOVED once testing is complete. - Dan B
+#
+echo "" >> /r2/input_output/Output\ Files/sar\ output.txt
+echo "" >> /r2/input_output/Output\ Files/sar\ output.txt
+echo "******  " `date` "  ******" >> /r2/input_output/Output\ Files/sar\ output.txt
+echo "" >> /r2/input_output/Output\ Files/sar\ output.txt

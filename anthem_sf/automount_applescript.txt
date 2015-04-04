@@ -1,0 +1,7 @@
+tell application "Finder"
+    try
+        mount volume "afp://server/a"
+        mount volume "afp://server/b"
+        mount volume "afp://server/c"
+    end try
+end tell

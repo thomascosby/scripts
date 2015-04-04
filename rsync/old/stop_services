@@ -1,0 +1,13 @@
+#!/bin/csh -f
+#
+# this script will shut down the AFP, SMB, and SQL services on the Aardvark
+# and then do an rsync of the raids and the venture data
+#
+/usr/etc/appletalk/atinit halt
+/usr/etc/venture/bin/dbmgr -shutdown
+/etc/init.d/samba stop
+sleep 60
+/usr/napc/rsync_scripts/rsync.raids
+/usr/napc/rsync_scripts/rsync.venture
+
+

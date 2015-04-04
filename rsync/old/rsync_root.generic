@@ -1,0 +1,20 @@
+#!/bin/bash
+rsync -axv --delete /usr/etc/appletalk/ FAILOVER_HOST::FPapp/ > /usr/napc/rsyncs/logs/rsync_root.lastlog
+rsync -axv --delete /usr/etc/webnative/ FAILOVER_HOST::WNapp/ >> /usr/napc/rsyncs/logs/rsync_root.lastlog
+rsync -axv --delete /var/adm/webnative/ FAILOVER_HOST::WNconfig/ >> /usr/napc/rsyncs/logs/rsync_root.lastlog
+rsync -axv --exclude="license" --delete /var/adm/appletalk/ FAILOVER_HOST::FPconfig/ >> /usr/napc/rsyncs/logs/rsync_root.lastlog
+rsync -axv --delete /etc/passwd FAILOVER_HOST::etc/ >> /usr/napc/rsyncs/logs/rsync_root.lastlog
+rsync -axv --delete /etc/shadow FAILOVER_HOST::etc/ >> /usr/napc/rsyncs/logs/rsync_root.lastlog
+rsync -axv --delete /etc/group FAILOVER_HOST::etc/ >> /usr/napc/rsyncs/logs/rsync_root.lastlog
+rsync -axv --delete /etc/gshadow FAILOVER_HOST::etc/ >> /usr/napc/rsyncs/logs/rsync_root.lastlog
+rsync -axv --delete /etc/samba/ FAILOVER_HOST::samba/ >> /usr/napc/rsyncs/logs/rsync_root.lastlog
+rsync -av /etc/printcap FAILOVER_HOST::etc/printcap >> /usr/napc/rsyncs/logs/rsync_root.lastlog
+rsync -axv --exclude="license" --exclude='rsyncs/logs' --delete /usr/napc/ FAILOVER_HOST::napc/ >> /usr/napc/rsyncs/logs/rsync_root.lastlog
+rsync -axv --delete /var/www/html/ FAILOVER_HOST::html/ >> /usr/napc/rsyncs/logs/rsync_root.lastlog
+rsync -axv --delete /etc/httpd/conf/ FAILOVER_HOST::etc/httpd/conf/ >> /usr/napc/rsyncs/logs/rsync_root.lastlog
+rsync -axv --delete --exclude='cron' --exclude='mail' --exclude='mqueue' --exclude='clientmqueue' /var/spool/ FAILOVER_HOST::spool/ >> /usr/napc/rsyncs/logs/rsync_root.lastlog
+rsync -av --delete /etc/cups/ FAILOVER_HOST::cups/ >> /usr/napc/rsyncs/logs/rsync_root.lastlog
+rsync -axv --delete /usr/FlashNet5/ FAILOVER_HOST::flashnet/ >> /usr/napc/rsyncs/logs/rsync_root.lastlog
+date >> /usr/napc/rsyncs/logs/rsync_root.dates
+rsync -av /usr/napc/rsyncs/logs/rsync_root.lastlog FAILOVER_HOST::napc/rsyncs/logs/rsync_root.lastlog
+rsync -av /usr/napc/rsyncs/logs/rsync_root.dates FAILOVER_HOST::napc/rsyncs/logs/rsync_root.dates

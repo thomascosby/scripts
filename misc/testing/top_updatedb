@@ -1,0 +1,7 @@
+#!
+#
+date >> /r2/input_output/Output\ Files/top_updatedb.txt
+echo "" >> /r2/input_output/Output\ Files/top_updatedb.txt
+top -n 1 -b -d 2 | grep 'updatedb' >> /r2/input_output/Output\ Files/top_updatedb.txt
+echo "" >> /r2/input_output/Output\ Files/top_updatedb.txt
+echo "" >> /r2/input_output/Output\ Files/top_updatedb.txt

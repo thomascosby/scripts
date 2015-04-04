@@ -1,0 +1,6 @@
+.Spotlight-V100*
+.Temporary*
+.fsevents*
+.afp*
+.adp*
+00_To_Archive

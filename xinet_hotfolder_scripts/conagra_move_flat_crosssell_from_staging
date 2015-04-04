@@ -1,0 +1,6 @@
+#!/bin/csh -f
+set d=/mn_raid2/auto/Output\ Files/XSELL_PROCESS_ConAgra
+echo "$d/$2" >& /var/tmp/filename_conagra_move_flat_crosssell_from_staging.out
+/usr/etc/appletalk/ksmv "$1" "$d/$2"
+chmod 666 "$d/$2"
+/usr/etc/appletalk/kats -c -i "$d/$2"

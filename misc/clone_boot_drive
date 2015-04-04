@@ -1,0 +1,109 @@
+#!/bin/csh -x
+# Copyright 1999 Silicon Graphics, Inc.
+# ALL RIGHTS RESERVED
+ 
+# You may use and modify this software and its documentation for your own
+# internal purposes without fee, provided that you agree that you will not
+# remove this notice from this software under any circumstances.  You may not
+# disclose the contents of this file to third parties in any form, in whole
+# or in part, without the prior written permission of Silicon Graphics, Inc.
+ 
+# THIS SOFTWARE IS PROVIDED "AS-IS" AND WITHOUT ANY WARRANTY OF ANY KIND,
+# EXPRESS, IMPLIED OR OTHERWISE, INCLUDING WITHOUT LIMITATION, ANY WARRANTY
+# OF MERCHANTABLIITY OR FITNESS FOR A PARTICULAR PURPOSE.
+# In no event shall SGI be liable for any special, incidental,
+# indirect or consequential damages of any kind, or any damages whatsoever
+# resulting from loss of use, data or profits, whether or not advised of the
+# possibility of damage, and on any theory of liability, arising out of or
+# in connection with the possession, use or performance of this software.
+
+# U.S. GOVERNMENT RESTRICTED RIGHTS LEGEND
+# Use, duplication, or disclosure by the Government is subject to restrictions
+# set forth in FAR 52.227.19(c)(2) or subparagraph (c)(1)(ii) of the Rights in
+# Technical Data and Computer Software clause at DFARS 252.227-7013 and/or in
+# similar or successor clauses in the FAR or the DOD or NASA FAR Supplement.
+# Unpublished-- rights reserved under the copyright laws of the United States.
+# Contractor/manufacturer is Silicon Graphics, Inc., 2011 N. Shoreline Blvd.,
+# Mountain View, CA 94039-7311.
+#
+# script written by Rennie Scott
+# Script to dump the root filesystem to the spare drive on a 
+# nightly basis. This is in the event of a root drive failure.
+
+# Configure all of the vaariables first, this make the script more
+# generic so it can be used at various sites by just changing the
+# variable and not the script. Also in this section initialize the
+# log file which can later be reviewed by the sysadmin and and is
+# sent to him via email.
+
+# Default values are base on the clone drive being in the second drive
+# on controller 0.
+
+set DATE = `date '+%m%d%Y'`
+set ADM_ADDR = "dberks@schawk.com , tholm@schawk.com"
+set LOGFILE = /usr/tmp/root_dump.$DATE
+set HOSTNAME = `/usr/bsd/hostname`
+set CLONE_VH = "/dev/rdsk/dks0d2vh"
+set CLONE_DRIVE = "/dev/dsk/dks0d2s0"
+set STAND_DIR = "/stand/tmp"
+
+touch $LOGFILE
+mkdir $STAND_DIR
+
+echo "Beginning root dump script for $DATE \n" >> $LOGFILE
+
+# Check to see if the clone drive is present else send mail and exit
+
+if (`ls $CLONE_DRIVE ` == $CLONE_DRIVE ) then
+	echo "Secondary hard disk present beginning clone of root drive"
+else
+	echo "Secondary hard drive not present cannot perform cloning."
+	exit 1
+endif
+
+# get the volume header info from the current root drive and place it
+# it in /stand/tmp
+
+foreach file \
+( `/sbin/dvhtool -v l /dev/rvh | awk '{print $1}' | sed -n 4,30p`)
+        /sbin/dvhtool -v get $file $STAND_DIR/$file
+end
+
+
+# Format the clone drive so that it is clean for the copy
+fx -x << end
+dksc
+0
+2
+0
+r/ro
+xfs
+y
+exit
+end
+
+echo "Format of the clone drive completed...copying volume header files \n" >> $LOGFILE 
+# Copy all of the Volume header file from the current root drive 
+
+/sbin/dvhtool -v add $STAND_DIR/sash sash $CLONE_VH
+/sbin/dvhtool -v add $STAND_DIR/tmp/ide ide $CLONE_VH
+/sbin/dvhtool -v add $STAND_DIR/symmon symmon $CLONE_VH
+
+mkfs_xfs $CLONE_DRIVE
+mkdir /root_clone
+/sbin/mount $CLONE_DRIVE /root_clone
+
+echo "Filesystem created and the clone drive is mounted \n" >> $LOGFILE
+echo "Beginning xfsdump and restore \n" >> $LOGFILE
+xfsdump -l 0 -J - / | xfsrestore -J - /root_clone >> $LOGFILE
+
+# Clean up the dumps and log info on the dumps
+
+echo "Dump completed cleaning up... \n" >> $LOGFILE
+
+/sbin/rm -rf $STAND_DIR
+/sbin/umount /root_clone
+/usr/bin/rmdir /root_clone
+echo "Clone process completed successfully" >> $LOGFILE
+cat $LOGFILE >> /var/adm/SYSLOG 
+Mail -s "Root Clone Completed" $ADM_ADDR < $LOGFILE

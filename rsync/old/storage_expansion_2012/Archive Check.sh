@@ -1,0 +1,27 @@
+#!/bin/bash
+
+#### a script to compare folders in one location with another and ensure they are identical
+#### used in Storage Expansion project 2012 to make sure that Archives copied to location are complete
+
+set theLog to /usr/schawk/logs/archive_check.log
+echo start >> $theLog
+date >> $theLog
+
+set RSYNC_ARGS="-ahv --dry-run --stats --delete --max-delete=1000"
+
+echo rsync start > $theLog
+date >> $theLog
+
+##  example /usr/bin/rsync $RSYNC_ARGS $REMOTEHST/  $LOCALHST/ 
+
+set folderOne to /mn_san1/jobsarchive/3marchive
+set folderTwo to /mn_san_raid2/jobsarchive/3marchive
+
+##  compare
+/usr/bin/rsync $RSYNC_ARGS $folderOne  $folderTwo | tee $theLog
+
+echo end >> $theLog
+date >> $theLog
+
+#/usr/bin/Mail -s opus.rsync.log dberks@schawk.com < $theLog
+

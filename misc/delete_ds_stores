@@ -1,0 +1,3 @@
+# Jim S - 06.27.2014 changed to ksmv
+# find /mn_raid*/ -name '.DS_Store' -exec rm {} \;
+find /mn_raid*/ -name '.DS_Store' -exec /usr/etc/appletalk/ksrm {} \;

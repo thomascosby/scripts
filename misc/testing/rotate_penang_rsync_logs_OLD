@@ -1,0 +1,109 @@
+#!/bin/sh -f
+#
+# a series of scripts that rotate the rsync logs
+
+# maximum size log is allowed to be (in K)
+MAX_LOG_SIZE=5000
+
+# this section rotates the Penang GM Asset rsync log
+THIS_LOG="/usr/schawk/logs/rsync_penang_gm.log"
+touch $THIS_LOG
+LOG_SIZE=`du -sk $THIS_LOG | cut -d '	' -f 1`
+if [ $LOG_SIZE -gt $MAX_LOG_SIZE ]; then
+        TIMESTAMP=$(date)
+        echo "$TIMESTAMP: rotating log" >> $THIS_LOG
+        touch ${THIS_LOG}.OLD
+        rm -f ${THIS_LOG}.OLD
+        cp $THIS_LOG ${THIS_LOG}.OLD
+        cat /dev/null > $THIS_LOG
+fi
+
+# this section rotates the Penang Con Agra Asset rsync log
+THIS_LOG="/usr/schawk/logs/rsync_penang_ca.log"
+# maximum size log is allowed to be (in K)
+touch $THIS_LOG
+LOG_SIZE=`du -sk $THIS_LOG | cut -d '	' -f 1`
+if [ $LOG_SIZE -gt $MAX_LOG_SIZE ]; then
+        TIMESTAMP=$(date)
+        echo "$TIMESTAMP: rotating log" >> $THIS_LOG
+        touch ${THIS_LOG}.OLD
+        rm -f ${THIS_LOG}.OLD
+        cp $THIS_LOG ${THIS_LOG}.OLD
+        cat /dev/null > $THIS_LOG
+fi
+
+# this section rotates the Penang Dollar General Asset rsync log
+THIS_LOG="/usr/schawk/logs/rsync_penang_dg.log"
+touch $THIS_LOG
+LOG_SIZE=`du -sk $THIS_LOG | cut -d '	' -f 1`
+
+if [ $LOG_SIZE -gt $MAX_LOG_SIZE ]; then
+        TIMESTAMP=$(date)
+        echo "$TIMESTAMP: rotating log" >> $THIS_LOG
+        touch ${THIS_LOG}.OLD
+        rm -f ${THIS_LOG}.OLD
+        cp $THIS_LOG ${THIS_LOG}.OLD
+        cat /dev/null > $THIS_LOG
+fi
+
+# this section rotates the Penang Dial Asset rsync log
+THIS_LOG="/usr/schawk/logs/rsync_penang_dial.log"
+touch $THIS_LOG
+LOG_SIZE=`du -sk $THIS_LOG | cut -d '	' -f 1`
+
+if [ $LOG_SIZE -gt $MAX_LOG_SIZE ]; then
+        TIMESTAMP=$(date)
+        echo "$TIMESTAMP: rotating log" >> $THIS_LOG
+        touch ${THIS_LOG}.OLD
+        rm -f ${THIS_LOG}.OLD
+        cp $THIS_LOG ${THIS_LOG}.OLD
+        cat /dev/null > $THIS_LOG
+fi
+
+# this section rotates the Penang Good Humor Briers Asset rsync log
+THIS_LOG="/usr/schawk/logs/rsync_penang_ghb.log"
+touch $THIS_LOG
+LOG_SIZE=`du -sk $THIS_LOG | cut -d '	' -f 1`
+
+if [ $LOG_SIZE -gt $MAX_LOG_SIZE ]; then
+        TIMESTAMP=$(date)
+        echo "$TIMESTAMP: rotating log" >> $THIS_LOG
+        touch ${THIS_LOG}.OLD
+        rm -f ${THIS_LOG}.OLD
+        cp $THIS_LOG ${THIS_LOG}.OLD
+        cat /dev/null > $THIS_LOG
+fi
+
+# this section rotates the Penang Nestle Asset rsync log
+THIS_LOG="/usr/schawk/logs/rsync_penang_nestle.log"
+touch $THIS_LOG
+LOG_SIZE=`du -sk $THIS_LOG | cut -d '	' -f 1`
+
+if [ $LOG_SIZE -gt $MAX_LOG_SIZE ]; then
+        TIMESTAMP=$(date)
+        echo "$TIMESTAMP: rotating log" >> $THIS_LOG
+        touch ${THIS_LOG}.OLD
+        rm -f ${THIS_LOG}.OLD
+        cp $THIS_LOG ${THIS_LOG}.OLD
+        cat /dev/null > $THIS_LOG
+fi
+
+# this section rotates the Penang Safeway Asset rsync log
+THIS_LOG="/usr/schawk/logs/rsync_penang_sw.log"
+touch $THIS_LOG
+LOG_SIZE=`du -sk $THIS_LOG | cut -d '	' -f 1`
+
+if [ $LOG_SIZE -gt $MAX_LOG_SIZE ]; then
+        TIMESTAMP=$(date)
+        echo "$TIMESTAMP: rotating log" >> $THIS_LOG
+        touch ${THIS_LOG}.OLD
+        rm -f ${THIS_LOG}.OLD
+        cp $THIS_LOG ${THIS_LOG}.OLD
+        cat /dev/null > $THIS_LOG
+fi
+
+exit
+
+
+
+

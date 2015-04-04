@@ -1,0 +1,4 @@
+#!/bin/sh -f
+sleep 10
+mv /raid/psstaging/`basename $1` /raid/psstaging/xXP4_SCREEN_DCS/
+exit $status

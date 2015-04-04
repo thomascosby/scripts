@@ -1,0 +1,88 @@
+# unlocks top levels of all Job Archive folders to allow new folder creation and recursively
+# sets permissions on Jobs Archives folders for current year to allow Archive write privs
+#
+####  Dan Berks  ###  7.17.09  ###
+#
+# modified by Dan B - 5.27.11 - includes new client archives and new paths to san storage
+#
+logPath=/usr/schawk/logs/archive_locking.log
+touch $logPath
+echo "UNLOCK STARTED: "`date` >> $logPath
+#
+# unlock top level archive folders
+echo "start: "`date`
+echo
+echo "** unlocking Jobs Archive folders (top level) **"
+chmod 777 /s1/jobsarchive/*archive
+# relock dollargenlegacyachive, unintentionally unlocked by prev step
+chmod 755 /s1/jobsarchive/dollargenlegacyarchive
+#
+# set permissions recursively for current year folders in each archive
+echo "** unlocking current year Archive folders (recursive)"
+thePath=/s1/jobsarchive/3marchive/Jobs\ Archive/`date +"%Y"`
+echo '    -- '$thePath
+chmod -R 777 "$thePath"*
+#
+thePath=/s1/jobsarchive/audiovoxarchive/Jobs\ Archive/`date +"%Y"`
+echo '    -- '$thePath
+chmod -R 777 "$thePath"*
+#
+thePath=/s1/jobsarchive/bestbuyarchive/Jobs\ Archive/`date +"%Y"`
+echo '    -- '$thePath
+chmod -R 777 "$thePath"*
+#
+thePath=/s1/jobsarchive/centralgardenarchive/Jobs\ Archive/`date +"%Y"`
+echo '    -- '$thePath
+chmod -R 777 "$thePath"*
+#
+thePath=/s1/jobsarchive/diamondfoodsarchive/Jobs\ Archive/`date +"%Y"`
+echo '    -- '$thePath
+chmod -R 777 "$thePath"*
+#
+thePath=/s1/jobsarchive/dollargeneralarchive/Jobs\ Archive/`date +"%Y"`
+echo '    -- '$thePath
+chmod -R 777 "$thePath"*
+#
+thePath=/s1/jobsarchive/faribaultfoodsarchive/Jobs\ Archive/`date +"%Y"`
+echo '    -- '$thePath
+chmod -R 777 "$thePath"*
+#
+thePath=/s1/jobsarchive/genmillsarchive/Jobs\ Archive/`date +"%Y"`
+echo '    -- '$thePath
+chmod -R 777 "$thePath"*
+#
+thePath=/s1/jobsarchive/ghbarchive/Jobs\ Archive/`date +"%Y"`
+echo '    -- '$thePath
+chmod -R 777 "$thePath"*
+#
+thePath=/s1/jobsarchive/hormelarchive/Jobs\ Archive/`date +"%Y"`
+echo '    -- '$thePath
+chmod -R 777 "$thePath"*
+#
+thePath=/s1/jobsarchive/merckarchive/Jobs\ Archive/`date +"%Y"`
+echo '    -- '$thePath
+chmod -R 777 "$thePath"*
+#
+thePath=/s1/jobsarchive/nestlearchive/Jobs\ Archive/`date +"%Y"`
+echo '    -- '$thePath
+chmod -R 777 "$thePath"*
+#
+thePath=/s1/jobsarchive/otherclientsarchive/Jobs\ Archive/`date +"%Y"`
+echo '    -- '$thePath
+chmod -R 777 "$thePath"*
+#
+thePath=/s1/jobsarchive/safewayarchive/Jobs\ Archive/`date +"%Y"`
+echo '    -- '$thePath
+chmod -R 777 "$thePath"*
+#
+thePath=/s1/jobsarchive/unileverarchive/Jobs\ Archive/`date +"%Y"`
+echo '    -- '$thePath
+chmod -R 777 "$thePath"*
+#
+echo
+echo "** unlock complete: "`date`
+echo "UNLOCK COMPLETE: "`date` >> $logPath
+sleep 10
+
+
+

@@ -1,0 +1,4 @@
+#!/bin/sh -f
+sleep 10
+mv /mnt/pcc/Intel_Mac/aardvark-ps-out/`basename $1` /mnt/pcc/Intel_Mac/Hotfolders/DCS_XP4_PDF/
+exit $status

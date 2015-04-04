@@ -1,0 +1,19 @@
+#!/bin/sh -f
+THIS_LOG="/path/to/this/logfile.log"
+# maximum size log is allowed to be (in K)
+MAX_LOG_SIZE=2500
+
+# this script rotates the (log description here) log
+touch $THIS_LOG
+LOG_SIZE=`du -sk $THIS_LOG | cut -d '	' -f 1`
+
+if [ $LOG_SIZE -gt $MAX_LOG_SIZE ]; then
+        TIMESTAMP=$(date)
+        echo "$TIMESTAMP: rotating log" >> $THIS_LOG
+        touch ${THIS_LOG}.OLD
+        rm -f ${THIS_LOG}.OLD
+        cp $THIS_LOG ${THIS_LOG}.OLD
+        cat /dev/null > $THIS_LOG
+        exit
+fi
+

@@ -1,0 +1,88 @@
+building file list ... done
+
+sent 2439 bytes  received 16 bytes  4910.00 bytes/sec
+total size is 17847610  speedup is 7269.90
+building file list ... done
+
+sent 32965 bytes  received 16 bytes  65962.00 bytes/sec
+total size is 94021163  speedup is 2850.77
+building file list ... done
+./
+apache.userfile
+grouparray.config
+grouparray.config.old
+groups
+userarray.config
+userarray.config.old
+jeremy.schellin/
+jeremy.schellin/group
+jeremy.schellin/group.old
+jeremy.schellin/user.config
+jeremy.schellin/user.config.old
+
+sent 102401 bytes  received 350 bytes  68500.67 bytes/sec
+total size is 26751945  speedup is 260.36
+building file list ... done
+at_log
+fpo_log
+fpod_vlog
+oft.opus.new.pag
+webdblog
+fid/:2Fmn_raid1:2Fgenmillsjobs.new.pag
+fid/:2Fmn_raid2:2F3mjobs.new.pag
+fid/:2Fmn_raid2:2Fauto.new.pag
+fid/:2Fmn_raid2:2Finput_output.new.pag
+fid/:2Fmn_raid2:2Fscheringploughjobs.new.pag
+fpath/:2Fmn_raid1:2Fgenmillsjobs.new.pag
+fpath/:2Fmn_raid2:2F3mjobs.new.pag
+fpath/:2Fmn_raid2:2Fauto.new.pag
+fpath/:2Fmn_raid2:2Finput_output.new.pag
+fpath/:2Fmn_raid2:2Fscheringploughjobs.new.pag
+
+sent 629871 bytes  received 310282 bytes  376061.20 bytes/sec
+total size is 675285497  speedup is 718.27
+building file list ... done
+
+sent 49 bytes  received 16 bytes  130.00 bytes/sec
+total size is 2694  speedup is 41.45
+building file list ... done
+
+sent 49 bytes  received 16 bytes  130.00 bytes/sec
+total size is 2004  speedup is 30.83
+building file list ... done
+
+sent 48 bytes  received 16 bytes  128.00 bytes/sec
+total size is 1139  speedup is 17.80
+building file list ... done
+
+sent 50 bytes  received 16 bytes  132.00 bytes/sec
+total size is 923  speedup is 13.98
+building file list ... done
+
+sent 269 bytes  received 16 bytes  570.00 bytes/sec
+total size is 35742  speedup is 125.41
+building file list ... done
+
+sent 47 bytes  received 16 bytes  126.00 bytes/sec
+total size is 3989  speedup is 63.32
+building file list ... done
+rsyncs/
+
+sent 2005 bytes  received 22 bytes  4054.00 bytes/sec
+total size is 375550  speedup is 185.27
+building file list ... done
+
+sent 163 bytes  received 16 bytes  358.00 bytes/sec
+total size is 21506  speedup is 120.15
+building file list ... done
+
+sent 83 bytes  received 16 bytes  198.00 bytes/sec
+total size is 47731  speedup is 482.13
+building file list ... done
+
+sent 12666 bytes  received 16 bytes  25364.00 bytes/sec
+total size is 3097534140  speedup is 244246.50
+building file list ... done
+
+sent 1632 bytes  received 16 bytes  3296.00 bytes/sec
+total size is 60682  speedup is 36.82

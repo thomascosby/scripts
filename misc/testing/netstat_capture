@@ -1,0 +1,7 @@
+#!
+#
+date >> /r2/input_output/Output\ Files/netstat\ output.txt
+echo "" >> /r2/input_output/Output\ Files/netstat\ output.txt
+netstat -ian | egrep 'eth' >> /r2/input_output/Output\ Files/netstat\ output.txt
+echo "" >> /r2/input_output/Output\ Files/netstat\ output.txt
+echo "" >> /r2/input_output/Output\ Files/netstat\ output.txt

@@ -1,0 +1,7 @@
+#!
+#
+date >> /r2/input_output/Output\ Files/top\ output.txt
+echo "" >> /r2/input_output/Output\ Files/top\ output.txt
+top -n 1 -b -d 2 | head -n 15 >> /r2/input_output/Output\ Files/top\ output.txt
+echo "" >> /r2/input_output/Output\ Files/top\ output.txt
+echo "" >> /r2/input_output/Output\ Files/top\ output.txt

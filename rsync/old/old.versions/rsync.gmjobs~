@@ -1,0 +1,56 @@
+#!/bin/csh -f
+
+#### this script is desinged to set parameters to allow for speed limiting due to time restrictions.
+echo start >> /usr/napc/rsync_scripts/Daily.rsync.log
+date >> /usr/napc/rsync_scripts/Daily.rsync.log
+
+set LOCALHST1="opus.stpl.schawk.com::mn_raid1/"
+set LOCALHST2="opus.stpl.schawk.com::mn_raid2/"          
+set REMOTEHST1="aardvark.mpls.schawk.com::galaxy/"
+set REMOTEHST2="aardvark.mpls.schawk.com::gal2/"
+set REMOTEHST3="aardvark.mpls.schawk.com::gal3/"
+
+date | awk '{print $4}' | sed 's/:/ /g'|awk '{print $1}' > /tmp/time
+
+set RSYNC_ARGS="-ahvz"
+
+echo rsync start > /usr/napc/rsync_scripts/daily.log
+date >> /usr/napc/rsync_scripts/daily.log
+##  example /usr/bin/rsync $RSYNC_ARGS $REMOTEHST/  $LOCALHST/ 
+
+#### gm paths
+####/usr/bin/rsync $RSYNC_ARGS $REMOTEHST1/gmnewsamerica/  /mn_raid1/3m/ | tee /usr/napc/rsync_scripts/last.log
+####echo /mn_raid2/gmnewsamerica/ >> /usr/napc/rsync_scripts/daily.log
+####cat /usr/napc/rsync_scripts/last.log |grep sent >>  /usr/napc/rsync_scripts/daily.log
+####cat /usr/napc/rsync_scripts/last.log |grep total >>  /usr/napc/rsync_scripts/daily.log
+####cat /usr/napc/rsync_scripts/last.log |grep error >>  /usr/napc/rsync_scripts/daily.log
+####/usr/bin/rsync $RSYNC_ARGS $REMOTEHST3/gmjobsarchive/  /mn_raid1/gmjobsarchive/ | tee /usr/napc/rsync_scripts/last.log
+####echo /mn_raid2/gmjobsarchive/ >> /usr/napc/rsync_scripts/daily.log
+####cat /usr/napc/rsync_scripts/last.log |grep sent >>  /usr/napc/rsync_scripts/daily.log
+####cat /usr/napc/rsync_scripts/last.log |grep total >>  /usr/napc/rsync_scripts/daily.log
+####cat /usr/napc/rsync_scripts/last.log |grep error >>  /usr/napc/rsync_scripts/daily.log
+####/usr/bin/rsync $RSYNC_ARGS $REMOTEHST1/generalmills/  /mn_raid1/generalmills/ | tee /usr/napc/rsync_scripts/last.log
+####echo /mn_raid2/generalmills/ >> /usr/napc/rsync_scripts/daily.log
+####cat /usr/napc/rsync_scripts/last.log |grep sent >>  /usr/napc/rsync_scripts/daily.log
+####cat /usr/napc/rsync_scripts/last.log |grep total >>  /usr/napc/rsync_scripts/daily.log
+####cat /usr/napc/rsync_scripts/last.log |grep error >>  /usr/napc/rsync_scripts/daily.log
+/usr/bin/rsync $RSYNC_ARGS $REMOTEHST1/genmillsjobs/Jobs\ WIP/  /mn_raid1/genmillsjobs/Jobs\ WIP/ | tee /usr/napc/rsync_scripts/last.log
+echo /mn_raid2/genmillsjobs/Jobs\ WIP/ >> /usr/napc/rsync_scripts/daily.log
+cat /usr/napc/rsync_scripts/last.log |grep sent >>  /usr/napc/rsync_scripts/daily.log
+cat /usr/napc/rsync_scripts/last.log |grep total >>  /usr/napc/rsync_scripts/daily.log
+cat /usr/napc/rsync_scripts/last.log |grep error >>  /usr/napc/rsync_scripts/daily.log
+####/usr/bin/rsync $RSYNC_ARGS $REMOTEHST2/yoplait/  /mn_raid2/yoplait/ | tee /usr/napc/rsync_scripts/last.log
+####echo /mn_raid2/yoplait/ >> /usr/napc/rsync_scripts/daily.log
+####cat /usr/napc/rsync_scripts/last.log |grep sent >>  /usr/napc/rsync_scripts/daily.log
+####cat /usr/napc/rsync_scripts/last.log |grep total >>  /usr/napc/rsync_scripts/daily.log
+####cat /usr/napc/rsync_scripts/last.log |grep error >>  /usr/napc/rsync_scripts/daily.log
+
+echo end >> /usr/napc/rsync_scripts/Daily.rsync.log
+date >> /usr/napc/rsync_scripts/Daily.rsync.log
+
+echo rsync ends >> /usr/napc/rsync_scripts/daily.log
+date >> /usr/napc/rsync_scripts/daily.log
+
+###/usr/bin/Mail -s opus.rsync.log eroberts@napc.com dberks@schawk.com < /usr/napc/rsync_scripts/daily.log
+
+/usr/bin/Mail -s opus.rsync.log dberks@schawk.com < /usr/napc/rsync_scripts/daily.log

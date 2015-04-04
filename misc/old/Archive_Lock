@@ -1,0 +1,115 @@
+# locks top levels of all Job Archive folders and recursively
+# sets permissions on Jobs Archives folders for current year to r/o
+# includes all "sub-year" folders for current year (e.g. 2010.1, 2010.2, etc)
+#
+####  Dan Berks	 ###  7.17.09  ###
+#
+# (revised: Dan Berks, 4.9.10 to reflect misc path changes)
+# (revised: Dan Berks, 7.21.10 to fix error in paths to Log folders)
+# (revised: Dan Berks, 5.27.11 to include new clients and new san paths)
+
+echo "start: "`date`
+echo
+#
+logPath=/usr/schawk/logs/archive_locking.log
+touch $logPath
+echo "LOCK STARTED: "`date` >> $logPath
+#
+# lock top level archive folders
+echo "** locking Jobs Archive folders (top level) **"
+chmod 755 /s1/jobsarchive/*archive/Jobs\ Archive
+#
+# set ownership and permissions on WIP/Logs folders
+echo "** locking WIP Logs folders"
+chown -R archive:archivers /r1/genmillsjobs/*Jobs\ WIP/Logs
+chown -R archive:archivers /r2/*jobs/*Jobs\ WIP/Logs
+chmod -R 755 /r1/genmillsjobs/*Jobs\ WIP/Logs
+chmod -R 755 /r2/*jobs/*Jobs\ WIP/Logs 
+#
+# set owner and permissions recursively for current year folders in each archive
+echo "** locking current year Archive folders (recursive):"
+thePath=/s1/jobsarchive/3marchive/Jobs\ Archive/`date +"%Y"`
+echo '    -- '$thePath
+chown -R root:archivers "$thePath"*
+chmod -R 755 "$thePath"*
+#
+thePath=/s1/jobsarchive/audiovoxarchive/Jobs\ Archive/`date +"%Y"`
+echo '    -- '$thePath
+chown -R root:archivers	"$thePath"*
+chmod -R 755 "$thePath"*
+#
+thePath=/s1/jobsarchive/bestbuyarchive/Jobs\ Archive/`date +"%Y"`
+echo '    -- '$thePath
+chown -R root:archivers	"$thePath"*
+chmod -R 755 "$thePath"*
+#
+thePath=/s1/jobsarchive/centralgardenarchive/Jobs\ Archive/`date +"%Y"`
+echo '    -- '$thePath
+chown -R root:archivers	"$thePath"*
+chmod -R 755 "$thePath"*
+#
+thePath=/s1/jobsarchive/conagraarchive/Jobs\ Archive/`date +"%Y"`
+echo '    -- '$thePath
+chown -R root:archivers	"$thePath"*
+chmod -R 755 "$thePath"*
+#
+thePath=/s1/jobsarchive/diamondfoodsarchive/Jobs\ Archive/`date +"%Y"`
+echo '    -- '$thePath
+chown -R root:archivers	"$thePath"*
+chmod -R 755 "$thePath"*
+#
+thePath=/s1/jobsarchive/dollargeneralarchive/Jobs\ Archive/`date +"%Y"`
+echo '    -- '$thePath
+chown -R root:archivers	"$thePath"*
+chmod -R 755 "$thePath"*
+#
+thePath=/s1/jobsarchive/faribaultfoodsarchive/Jobs\ Archive/`date +"%Y"`
+echo '    -- '$thePath
+chown -R root:archivers	"$thePath"*
+chmod -R 755 "$thePath"*
+#
+thePath=/s1/jobsarchive/genmillsarchive/Jobs\ Archive/`date +"%Y"`
+echo '    -- '$thePath
+chown -R root:archivers	"$thePath"*
+chmod -R 755 "$thePath"*
+#
+thePath=/s1/jobsarchive/ghbarchive/Jobs\ Archive/`date +"%Y"`
+echo '    -- '$thePath
+chmod 775 "$thePath"*
+#
+thePath=/s1/jobsarchive/hormelarchive/Jobs\ Archive/`date +"%Y"`
+echo '    -- '$thePath
+chown -R root:archivers	"$thePath"*
+chmod -R 755 "$thePath"*
+#
+thePath=/s1/jobsarchive/merckarchive/Jobs\ Archive/`date +"%Y"`
+echo '    -- '$thePath
+chown -R root:archivers	"$thePath"*
+chmod -R 755 "$thePath"*
+#
+thePath=/s1/jobsarchive/nestlearchive/Jobs\ Archive/`date +"%Y"`
+echo '    -- '$thePath
+chown -R root:archivers	"$thePath"*
+chmod -R 755 "$thePath"*
+#
+thePath=/s1/jobsarchive/otherclientsarchive/Jobs\ Archive/`date +"%Y"`
+echo '    -- '$thePath
+chown -R root:archivers	"$thePath"*
+chmod -R 755 "$thePath"*
+#
+thePath=/s1/jobsarchive/safewayarchive/Jobs\ Archive/`date +"%Y"`
+echo '    -- '$thePath
+chown -R root:archivers	"$thePath"*
+chmod -R 755 "$thePath"*
+#
+thePath=/s1/jobsarchive/unileverarchive/Jobs\ Archive/`date +"%Y"`
+echo '    -- '$thePath
+chown -R root:archivers	"$thePath"*
+chmod -R 755 "$thePath"*
+#
+echo
+echo "complete: "`date`
+echo "LOCK COMPLETE: "`date` >> $logPath
+sleep 10
+
+

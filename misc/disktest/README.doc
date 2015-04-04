@@ -1,0 +1,4 @@
+This script copies testfolder and logs the time required. It can be invoked at regular intervals as a way to gauge disk performance. By default, testfiles will contain a single 1 GB 
+file. It's a good idea to dupe that a few times to get a larger sample. Five copies of it should suffice.
+
+Dan B, 01.31.13

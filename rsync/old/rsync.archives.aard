@@ -1,0 +1,131 @@
+#!/bin/csh -f
+
+#### this script is desinged to set parameters to allow for speed limiting due to time restrictions.
+echo start >> /usr/napc/rsync_scripts/Daily.rsync.log
+date >> /usr/napc/rsync_scripts/Daily.rsync.log
+
+set LOCALHST1="opus.stpl.schawk.com::mn_raid1/"
+set LOCALHST2="opus.stpl.schawk.com::mn_raid2/"          
+set REMOTEHST1="aardvark.mpls.schawk.com::galaxy/"
+set REMOTEHST2="aardvark.mpls.schawk.com::gal2/"
+set REMOTEHST3="aardvark.mpls.schawk.com::gal3/"
+
+date | awk '{print $4}' | sed 's/:/ /g'|awk '{print $1}' > /tmp/time
+
+set DAY = `cat /tmp/time |grep -f /usr/napc/rsync_scripts/day`
+set NITE = `cat /tmp/time |grep -f /usr/napc/rsync_scripts/nite`
+
+if ("X$DAY" != "X")  then
+
+echo Its daytime running rsync at reduced rate
+set RSYNC_ARGS="-ahvz"
+
+endif
+
+if ("X$NITE" != "X")  then
+
+echo Its Night running rsync at the full rate
+#set RSYNC_ARGS="-ahvz --delete --max-delete=20000"
+set RSYNC_ARGS="-ahvz"
+endif
+else
+set RSYNC_ARGS="-help"
+echo schawk.rsync failed
+echo failed >> /usr/napc/rsync_scripts/Daily.rsync.log
+date >> /usr/napc/rsync_scripts/Daily.rsync.log
+echo rsync failed > /usr/napc/rsync_scripts/daily.log
+date >> /usr/napc/rsync_scripts/daily.log
+echo  $RSYNC_ARGS
+endif
+
+echo rsync start > /usr/napc/rsync_scripts/daily.log
+date >> /usr/napc/rsync_scripts/daily.log
+
+##  example /usr/bin/rsync $RSYNC_ARGS $REMOTEHST/  $LOCALHST/ 
+
+## 3M Jobs Archive
+/usr/bin/rsync $RSYNC_ARGS $REMOTEHST2/3mjobs/Jobs\ Archive/2009/  /mn_raid2/3mjobs/Jobs\ Archive/2009/ | tee /usr/napc/rsync_scripts/last.log
+echo /mn_raid2/3mjobs/Jobs\ Archive/ >> /usr/napc/rsync_scripts/daily.log
+cat /usr/napc/rsync_scripts/last.log |grep sent >>  /usr/napc/rsync_scripts/daily.log
+cat /usr/napc/rsync_scripts/last.log |grep total >>  /usr/napc/rsync_scripts/daily.log
+cat /usr/napc/rsync_scripts/last.log |grep error >>  /usr/napc/rsync_scripts/daily.log
+
+## Audiovox Jobs Archive
+/usr/bin/rsync $RSYNC_ARGS $REMOTEHST2/audiovoxjobs/Jobs\ Archive/2009/  /mn_raid2/audiovoxjobs/Jobs\ Archive/2009/ | tee /usr/napc/rsync_scripts/last.log
+echo /mn_raid2/audiovoxjobs/Jobs\ Archive/ >> /usr/napc/rsync_scripts/daily.log
+cat /usr/napc/rsync_scripts/last.log |grep sent >>  /usr/napc/rsync_scripts/daily.log
+cat /usr/napc/rsync_scripts/last.log |grep total >>  /usr/napc/rsync_scripts/daily.log
+cat /usr/napc/rsync_scripts/last.log |grep error >>  /usr/napc/rsync_scripts/daily.log
+
+## Best Buy Jobs Archive
+/usr/bin/rsync $RSYNC_ARGS $REMOTEHST2/bestbuyjobs/Jobs\ Archive/2009/  /mn_raid2/bestbuyjobs/Jobs\ Archive/2009/ | tee  /usr/napc/rsync_scripts/last.log
+echo /mn_raid2/bestbuyjobs/Jobs\ Archive/ >> /usr/napc/rsync_scripts/daily.log
+cat /usr/napc/rsync_scripts/last.log |grep sent >>  /usr/napc/rsync_scripts/daily.log
+cat /usr/napc/rsync_scripts/last.log |grep total >>  /usr/napc/rsync_scripts/daily.log
+cat /usr/napc/rsync_scripts/last.log |grep error >>  /usr/napc/rsync_scripts/daily.log
+
+## Con Agra Jobs Archive
+/usr/bin/rsync $RSYNC_ARGS $REMOTEHST2/conagrajobs/Jobs\ Archive/2009/  /mn_raid2/conagrajobs/Jobs\ Archive/2009/ | tee /usr/napc/rsync_scripts/last.log
+echo /mn_raid2/conagrajobs/Jobs\ Archive/ >> /usr/napc/rsync_scripts/daily.log
+cat /usr/napc/rsync_scripts/last.log |grep sent >>  /usr/napc/rsync_scripts/daily.log
+cat /usr/napc/rsync_scripts/last.log |grep total >>  /usr/napc/rsync_scripts/daily.log
+cat /usr/napc/rsync_scripts/last.log |grep error >>  /usr/napc/rsync_scripts/daily.log
+
+## GHB Jobs Archive
+/usr/bin/rsync $RSYNC_ARGS $REMOTEHST2/ghbjobs/Jobs\ Archive/2009/  /mn_raid2/ghbjobs/Jobs\ Archive/2009/ | tee /usr/napc/rsync_scripts/last.log
+echo /mn_raid2/ghbjobs/Jobs\ Archive/ >> /usr/napc/rsync_scripts/daily.log
+cat /usr/napc/rsync_scripts/last.log |grep sent >>  /usr/napc/rsync_scripts/daily.log
+cat /usr/napc/rsync_scripts/last.log |grep total >>  /usr/napc/rsync_scripts/daily.log
+cat /usr/napc/rsync_scripts/last.log |grep error >>  /usr/napc/rsync_scripts/daily.log
+
+## Hormel Jobs Archive
+/usr/bin/rsync $RSYNC_ARGS $REMOTEHST2/hormeljobs/Jobs\ Archive/2009/  /mn_raid2/hormeljobs/Jobs\ Archive/2009/ | tee /usr/napc/rsync_scripts/last.log
+echo /mn_raid2/hormeljobs/Jobs\ Archive/ >> /usr/napc/rsync_scripts/daily.log
+cat /usr/napc/rsync_scripts/last.log |grep sent >>  /usr/napc/rsync_scripts/daily.log
+cat /usr/napc/rsync_scripts/last.log |grep total >>  /usr/napc/rsync_scripts/daily.log
+cat /usr/napc/rsync_scripts/last.log |grep error >>  /usr/napc/rsync_scripts/daily.log
+
+## Nestle Jobs Archive
+/usr/bin/rsync $RSYNC_ARGS $REMOTEHST2/nestlejobs/Jobs\ Archive/2009/  /mn_raid2/nestlejobs/Jobs\ Archive/2009/ | tee /usr/napc/rsync_scripts/last.log
+echo /mn_raid2/nestlejobs/Jobs\ Archive/ >> /usr/napc/rsync_scripts/daily.log
+cat /usr/napc/rsync_scripts/last.log |grep sent >>  /usr/napc/rsync_scripts/daily.log
+cat /usr/napc/rsync_scripts/last.log |grep total >>  /usr/napc/rsync_scripts/daily.log
+cat /usr/napc/rsync_scripts/last.log |grep error >>  /usr/napc/rsync_scripts/daily.log
+
+## Schering-Plough Jobs Archive
+/usr/bin/rsync $RSYNC_ARGS $REMOTEHST2/scheringploughjobs/Jobs\ Archive/2009/  /mn_raid2/scheringploughjobs/Jobs\ Archive/2009/ | tee /usr/napc/rsync_scripts/last.log
+echo /mn_raid2/scheringploughjobs/Jobs\ Archive/ >> /usr/napc/rsync_scripts/daily.log
+cat /usr/napc/rsync_scripts/last.log |grep sent >>  /usr/napc/rsync_scripts/daily.log
+cat /usr/napc/rsync_scripts/last.log |grep total >>  /usr/napc/rsync_scripts/daily.log
+cat /usr/napc/rsync_scripts/last.log |grep error >>  /usr/napc/rsync_scripts/daily.log
+
+## Unilever Jobs Archive
+/usr/bin/rsync $RSYNC_ARGS $REMOTEHST2/unileverjobs/Jobs\ Archive/2009/  /mn_raid2/unileverjobs/Jobs\ Archive/2009/ | tee /usr/napc/rsync_scripts/last.log
+echo /mn_raid2/unileverjobs/Jobs\ Archive/ >> /usr/napc/rsync_scripts/daily.log
+cat /usr/napc/rsync_scripts/last.log |grep sent >>  /usr/napc/rsync_scripts/daily.log
+cat /usr/napc/rsync_scripts/last.log |grep total >>  /usr/napc/rsync_scripts/daily.log
+cat /usr/napc/rsync_scripts/last.log |grep error >>  /usr/napc/rsync_scripts/daily.log
+
+## Other Clients Jobs Archive
+/usr/bin/rsync $RSYNC_ARGS $REMOTEHST3/otherclients/Jobs\ Archive/2009/  /mn_raid2/otherclients/Jobs\ Archive/2009/ | tee /usr/napc/rsync_scripts/last.log
+echo /mn_raid2/otherclients/Jobs\ Archive/ >> /usr/napc/rsync_scripts/daily.log
+cat /usr/napc/rsync_scripts/last.log |grep sent >>  /usr/napc/rsync_scripts/daily.log
+cat /usr/napc/rsync_scripts/last.log |grep total >>  /usr/napc/rsync_scripts/daily.log
+cat /usr/napc/rsync_scripts/last.log |grep error >>  /usr/napc/rsync_scripts/daily.log
+
+## Gen Mills Jobs Archive
+/usr/bin/rsync $RSYNC_ARGS $REMOTEHST3/gmjobsarchive/2009/  /mn_raid1/gmjobsarchive/2009/ | tee /usr/napc/rsync_scripts/last.log
+echo /mn_raid2/gmjobsarchive/ >> /usr/napc/rsync_scripts/daily.log
+cat /usr/napc/rsync_scripts/last.log |grep sent >>  /usr/napc/rsync_scripts/daily.log
+cat /usr/napc/rsync_scripts/last.log |grep total >>  /usr/napc/rsync_scripts/daily.log
+cat /usr/napc/rsync_scripts/last.log |grep error >>  /usr/napc/rsync_scripts/daily.log
+
+echo end >> /usr/napc/rsync_scripts/Daily.rsync.log
+date >> /usr/napc/rsync_scripts/Daily.rsync.log
+
+echo rsync ends >> /usr/napc/rsync_scripts/daily.log
+date >> /usr/napc/rsync_scripts/daily.log
+
+###/usr/bin/Mail -s opus.rsync.log eroberts@napc.com dberks@schawk.com < /usr/napc/rsync_scripts/daily.log
+
+/usr/bin/Mail -s opus.rsync.log dberks@schawk.com < /usr/napc/rsync_scripts/daily.log

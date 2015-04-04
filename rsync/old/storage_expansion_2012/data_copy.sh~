@@ -1,0 +1,29 @@
+LOG_FILE="/usr/schawk/logs/data_copy.log"
+RSYNC="/usr/bin/rsync"
+RECIPIENTS="dberks@schawk.com"
+
+# this script copies data on the Opus Server from one location to another
+# as part of the Storage Expansion Project
+# Dan B - 11.21.12
+
+SOURCEVOL="/mn_raid1/*"
+DESTVOL="/mn_san_raid1/"
+
+# prep log file
+touch $LOG_FILE
+# cat /dev/null > $LOG_FILE
+echo "" >> $LOG_FILE
+echo "###  START COPY: "$SOURCEVOL" TO "$DESTVOL >> $LOG_FILE
+date >> $LOG_FILE
+
+# perform rsync
+$RSYNC -rltvh --dry-run --stats $SOURCEVOL $DESTVOL 2>&1 >> $LOG_FILE
+
+# finish up
+echo "" >> $LOG_FILE
+date >> $LOG_FILE
+echo "###  END DATA COPY: "$SOURCEVOL" TO "$DESTVOL >> $LOG_FILE
+echo "" >> $LOG_FILE
+echo "" >> $LOG_FILE
+mail -s "[Rsync - DATA COPY]" $RECIPIENTS < $LOG_FILE
+

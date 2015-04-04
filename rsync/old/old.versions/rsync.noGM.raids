@@ -1,0 +1,189 @@
+#!/bin/csh -f
+
+#### this script is desinged to set parameters to allow for speed limiting due to time restrictions.
+echo start >> /usr/napc/rsync_scripts/Daily.rsync.log
+date >> /usr/napc/rsync_scripts/Daily.rsync.log
+
+set LOCALHST1="opus.stpl.schawk.com::mn_raid1/"
+set LOCALHST2="opus.stpl.schawk.com::mn_raid2/"          
+set REMOTEHST1="aardvark.mpls.schawk.com::galaxy/"
+set REMOTEHST2="aardvark.mpls.schawk.com::gal2/"
+set REMOTEHST3="aardvark.mpls.schawk.com::gal3/"
+
+date | awk '{print $4}' | sed 's/:/ /g'|awk '{print $1}' > /tmp/time
+
+set DAY = `cat /tmp/time |grep -f /usr/napc/rsync_scripts/day`
+set NITE = `cat /tmp/time |grep -f /usr/napc/rsync_scripts/nite`
+
+if ("X$DAY" != "X")  then
+
+echo Its daytime running rsync at reduced rate
+set RSYNC_ARGS="-ahvz"
+
+endif
+
+if ("X$NITE" != "X")  then
+
+echo Its Night running rsync at the full rate
+#set RSYNC_ARGS="-ahvz --delete --max-delete=20000"
+set RSYNC_ARGS="-ahvz"
+endif
+else
+set RSYNC_ARGS="-help"
+echo schawk.rsync failed
+echo failed >> /usr/napc/rsync_scripts/Daily.rsync.log
+date >> /usr/napc/rsync_scripts/Daily.rsync.log
+echo rsync failed > /usr/napc/rsync_scripts/daily.log
+date >> /usr/napc/rsync_scripts/daily.log
+echo  $RSYNC_ARGS
+endif
+
+echo rsync start > /usr/napc/rsync_scripts/daily.log
+date >> /usr/napc/rsync_scripts/daily.log
+##  example /usr/bin/rsync $RSYNC_ARGS $REMOTEHST/  $LOCALHST/ 
+/usr/bin/rsync $RSYNC_ARGS $REMOTEHST2/3m/  /mn_raid2/3m/  | tee /usr/napc/rsync_scripts/last.log
+echo /mn_raid2/3m/ >> /usr/napc/rsync_scripts/daily.log
+cat /usr/napc/rsync_scripts/last.log |grep sent >>  /usr/napc/rsync_scripts/daily.log
+cat /usr/napc/rsync_scripts/last.log |grep total >>  /usr/napc/rsync_scripts/daily.log
+cat /usr/napc/rsync_scripts/last.log |grep error >>  /usr/napc/rsync_scripts/daily.log
+/usr/bin/rsync $RSYNC_ARGS $REMOTEHST2/3mjobs/Jobs\ WIP/  /mn_raid2/3mjobs/Jobs\ WIP/ | tee /usr/napc/rsync_scripts/last.log
+echo /mn_raid2/3mjobs/Jobs\ WIP/ >> /usr/napc/rsync_scripts/daily.log
+cat /usr/napc/rsync_scripts/last.log |grep sent >>  /usr/napc/rsync_scripts/daily.log
+cat /usr/napc/rsync_scripts/last.log |grep total >>  /usr/napc/rsync_scripts/daily.log
+cat /usr/napc/rsync_scripts/last.log |grep error >>  /usr/napc/rsync_scripts/daily.log
+/usr/bin/rsync $RSYNC_ARGS $REMOTEHST2/bestbuy/  /mn_raid2/bestbuy/ | tee  /usr/napc/rsync_scripts/last.log
+echo /mn_raid2/bestbuy/ >> /usr/napc/rsync_scripts/daily.log
+cat /usr/napc/rsync_scripts/last.log |grep sent >>  /usr/napc/rsync_scripts/daily.log
+cat /usr/napc/rsync_scripts/last.log |grep total >>  /usr/napc/rsync_scripts/daily.log
+cat /usr/napc/rsync_scripts/last.log |grep error >>  /usr/napc/rsync_scripts/daily.log
+/usr/bin/rsync $RSYNC_ARGS $REMOTEHST2/bestbuyjobs/Jobs\ WIP/  /mn_raid2/bestbuyjobs/Jobs\ WIP/ | tee  /usr/napc/rsync_scripts/last.log
+echo /mn_raid2/bestbuyjobs/Jobs\ WIP/ >> /usr/napc/rsync_scripts/daily.log
+cat /usr/napc/rsync_scripts/last.log |grep sent >>  /usr/napc/rsync_scripts/daily.log
+cat /usr/napc/rsync_scripts/last.log |grep total >>  /usr/napc/rsync_scripts/daily.log
+cat /usr/napc/rsync_scripts/last.log |grep error >>  /usr/napc/rsync_scripts/daily.log
+/usr/bin/rsync $RSYNC_ARGS $REMOTEHST2/conagra/  /mn_raid2/conagra/ | tee  /usr/napc/rsync_scripts/last.log
+echo /mn_raid2/conagra/ >> /usr/napc/rsync_scripts/daily.log
+cat /usr/napc/rsync_scripts/last.log |grep sent >>  /usr/napc/rsync_scripts/daily.log
+cat /usr/napc/rsync_scripts/last.log |grep total >>  /usr/napc/rsync_scripts/daily.log
+cat /usr/napc/rsync_scripts/last.log |grep error >>  /usr/napc/rsync_scripts/daily.log
+/usr/bin/rsync $RSYNC_ARGS $REMOTEHST2/conagrajobs/Jobs\ WIP/  /mn_raid2/conagrajobs/Jobs\ WIP/ | tee /usr/napc/rsync_scripts/last.log
+echo /mn_raid2/conagrajobs/Jobs\ WIP/ >> /usr/napc/rsync_scripts/daily.log
+cat /usr/napc/rsync_scripts/last.log |grep sent >>  /usr/napc/rsync_scripts/daily.log
+cat /usr/napc/rsync_scripts/last.log |grep total >>  /usr/napc/rsync_scripts/daily.log
+cat /usr/napc/rsync_scripts/last.log |grep error >>  /usr/napc/rsync_scripts/daily.log
+/usr/bin/rsync $RSYNC_ARGS $REMOTEHST2/ghb/  /mn_raid2/ghb/ | tee /usr/napc/rsync_scripts/last.log
+echo /mn_raid2/ghb/ >> /usr/napc/rsync_scripts/daily.log
+cat /usr/napc/rsync_scripts/last.log |grep sent >>  /usr/napc/rsync_scripts/daily.log
+cat /usr/napc/rsync_scripts/last.log |grep total >>  /usr/napc/rsync_scripts/daily.log
+cat /usr/napc/rsync_scripts/last.log |grep error >>  /usr/napc/rsync_scripts/daily.log
+/usr/bin/rsync $RSYNC_ARGS $REMOTEHST2/ghbjobs/Jobs\ WIP/  /mn_raid2/ghbjobs/Jobs\ WIP/ | tee /usr/napc/rsync_scripts/last.log
+echo /mn_raid2/ghbjobs/Jobs\ WIP/ >> /usr/napc/rsync_scripts/daily.log
+cat /usr/napc/rsync_scripts/last.log |grep sent >>  /usr/napc/rsync_scripts/daily.log
+cat /usr/napc/rsync_scripts/last.log |grep total >>  /usr/napc/rsync_scripts/daily.log
+cat /usr/napc/rsync_scripts/last.log |grep error >>  /usr/napc/rsync_scripts/daily.log
+/usr/bin/rsync $RSYNC_ARGS $REMOTEHST2/hormel/  /mn_raid2/hormel/ | tee /usr/napc/rsync_scripts/last.log
+echo /mn_raid2/hormel/ >> /usr/napc/rsync_scripts/daily.log
+cat /usr/napc/rsync_scripts/last.log |grep sent >>  /usr/napc/rsync_scripts/daily.log
+cat /usr/napc/rsync_scripts/last.log |grep total >>  /usr/napc/rsync_scripts/daily.log
+cat /usr/napc/rsync_scripts/last.log |grep error >>  /usr/napc/rsync_scripts/daily.log
+/usr/bin/rsync $RSYNC_ARGS $REMOTEHST2/hormeljobs/Jobs\ WIP/  /mn_raid2/hormeljobs/Jobs\ WIP/ | tee /usr/napc/rsync_scripts/last.log
+echo /mn_raid2/hormeljobs/Jobs\ WIP/ >> /usr/napc/rsync_scripts/daily.log
+cat /usr/napc/rsync_scripts/last.log |grep sent >>  /usr/napc/rsync_scripts/daily.log
+cat /usr/napc/rsync_scripts/last.log |grep total >>  /usr/napc/rsync_scripts/daily.log
+cat /usr/napc/rsync_scripts/last.log |grep error >>  /usr/napc/rsync_scripts/daily.log
+/usr/bin/rsync $RSYNC_ARGS $REMOTEHST2/nestle/  /mn_raid2/nestle/ | tee /usr/napc/rsync_scripts/last.log
+echo /mn_raid2/nestle/ >> /usr/napc/rsync_scripts/daily.log
+cat /usr/napc/rsync_scripts/last.log |grep sent >>  /usr/napc/rsync_scripts/daily.log
+cat /usr/napc/rsync_scripts/last.log |grep total >>  /usr/napc/rsync_scripts/daily.log
+cat /usr/napc/rsync_scripts/last.log |grep error >>  /usr/napc/rsync_scripts/daily.log
+/usr/bin/rsync $RSYNC_ARGS $REMOTEHST2/nestlejobs/Jobs\ WIP/  /mn_raid2/nestlejobs/Jobs\ WIP/ | tee /usr/napc/rsync_scripts/last.log
+echo /mn_raid2/nestlejobs/Jobs\ WIP/ >> /usr/napc/rsync_scripts/daily.log
+cat /usr/napc/rsync_scripts/last.log |grep sent >>  /usr/napc/rsync_scripts/daily.log
+cat /usr/napc/rsync_scripts/last.log |grep total >>  /usr/napc/rsync_scripts/daily.log
+cat /usr/napc/rsync_scripts/last.log |grep error >>  /usr/napc/rsync_scripts/daily.log
+/usr/bin/rsync $RSYNC_ARGS $REMOTEHST2/scheringplough/  /mn_raid2/scheringplough/ | tee /usr/napc/rsync_scripts/last.log
+echo /mn_raid2/scheringplough/ >> /usr/napc/rsync_scripts/daily.log
+cat /usr/napc/rsync_scripts/last.log |grep sent >>  /usr/napc/rsync_scripts/daily.log
+cat /usr/napc/rsync_scripts/last.log |grep total >>  /usr/napc/rsync_scripts/daily.log
+cat /usr/napc/rsync_scripts/last.log |grep error >>  /usr/napc/rsync_scripts/daily.log
+/usr/bin/rsync $RSYNC_ARGS $REMOTEHST2/scheringploughjobs/Jobs\ WIP/  /mn_raid2/scheringploughjobs/Jobs\ WIP/ | tee /usr/napc/rsync_scripts/last.log
+echo /mn_raid2/scheringploughjobs/Jobs\ WIP/ >> /usr/napc/rsync_scripts/daily.log
+cat /usr/napc/rsync_scripts/last.log |grep sent >>  /usr/napc/rsync_scripts/daily.log
+cat /usr/napc/rsync_scripts/last.log |grep total >>  /usr/napc/rsync_scripts/daily.log
+cat /usr/napc/rsync_scripts/last.log |grep error >>  /usr/napc/rsync_scripts/daily.log
+/usr/bin/rsync $RSYNC_ARGS $REMOTEHST2/unilever/  /mn_raid2/unilever/ | tee /usr/napc/rsync_scripts/last.log
+echo /mn_raid2/unilever/ >> /usr/napc/rsync_scripts/daily.log
+cat /usr/napc/rsync_scripts/last.log |grep sent >>  /usr/napc/rsync_scripts/daily.log
+cat /usr/napc/rsync_scripts/last.log |grep total >>  /usr/napc/rsync_scripts/daily.log
+cat /usr/napc/rsync_scripts/last.log |grep error >>  /usr/napc/rsync_scripts/daily.log
+/usr/bin/rsync $RSYNC_ARGS $REMOTEHST2/unileverjobs/Jobs\ WIP/  /mn_raid2/unileverjobs/Jobs\ WIP/ | tee /usr/napc/rsync_scripts/last.log
+echo /mn_raid2/unileverjobs/Jobs\ WIP/ >> /usr/napc/rsync_scripts/daily.log
+cat /usr/napc/rsync_scripts/last.log |grep sent >>  /usr/napc/rsync_scripts/daily.log
+cat /usr/napc/rsync_scripts/last.log |grep total >>  /usr/napc/rsync_scripts/daily.log
+cat /usr/napc/rsync_scripts/last.log |grep error >>  /usr/napc/rsync_scripts/daily.log
+/usr/bin/rsync $RSYNC_ARGS $REMOTEHST2/otherclients/Jobs\ WIP/  /mn_raid2/otherclients/Jobs\ WIP/ | tee /usr/napc/rsync_scripts/last.log
+echo /mn_raid2/otherclients/Jobs\ WIP/ >> /usr/napc/rsync_scripts/daily.log
+cat /usr/napc/rsync_scripts/last.log |grep sent >>  /usr/napc/rsync_scripts/daily.log
+cat /usr/napc/rsync_scripts/last.log |grep total >>  /usr/napc/rsync_scripts/daily.log
+cat /usr/napc/rsync_scripts/last.log |grep error >>  /usr/napc/rsync_scripts/daily.log
+/usr/bin/rsync $RSYNC_ARGS $REMOTEHST2/otherclients/Client\ Files/  /mn_raid2/otherclients/Client\ Files/ | tee /usr/napc/rsync_scripts/last.log
+echo /mn_raid2/otherclients/Client Files/ >> /usr/napc/rsync_scripts/daily.log
+cat /usr/napc/rsync_scripts/last.log |grep sent >>  /usr/napc/rsync_scripts/daily.log
+cat /usr/napc/rsync_scripts/last.log |grep total >>  /usr/napc/rsync_scripts/daily.log
+cat /usr/napc/rsync_scripts/last.log |grep error >>  /usr/napc/rsync_scripts/daily.log
+/usr/bin/rsync $RSYNC_ARGS $REMOTEHST2/otherclients/Color/  /mn_raid2/otherclients/Color/ | tee /usr/napc/rsync_scripts/last.log
+echo /mn_raid2/otherclients/Color/ >> /usr/napc/rsync_scripts/daily.log
+cat /usr/napc/rsync_scripts/last.log |grep sent >>  /usr/napc/rsync_scripts/daily.log
+cat /usr/napc/rsync_scripts/last.log |grep total >>  /usr/napc/rsync_scripts/daily.log
+cat /usr/napc/rsync_scripts/last.log |grep error >>  /usr/napc/rsync_scripts/daily.log
+/usr/bin/rsync $RSYNC_ARGS $REMOTEHST2/otherclients/Weston\ Production/  /mn_raid2/otherclients/Weston\ Production/ | tee /usr/napc/rsync_scripts/last.log
+echo /mn_raid2/otherclients/Weston Production/ >> /usr/napc/rsync_scripts/daily.log
+cat /usr/napc/rsync_scripts/last.log |grep sent >>  /usr/napc/rsync_scripts/daily.log
+cat /usr/napc/rsync_scripts/last.log |grep total >>  /usr/napc/rsync_scripts/daily.log
+cat /usr/napc/rsync_scripts/last.log |grep error >>  /usr/napc/rsync_scripts/daily.log
+#### non db paths
+echo /mn_raid2/audiovox/ >> /usr/napc/rsync_scripts/daily.log
+cat /usr/napc/rsync_scripts/last.log |grep sent >>  /usr/napc/rsync_scripts/daily.log
+cat /usr/napc/rsync_scripts/last.log |grep total >>  /usr/napc/rsync_scripts/daily.log
+cat /usr/napc/rsync_scripts/last.log |grep error >>  /usr/napc/rsync_scripts/daily.log
+/usr/bin/rsync $RSYNC_ARGS $REMOTEHST2/audiovoxjobs/Jobs\ WIP/  /mn_raid2/audiovoxjobs/Jobs\ WIP/ | tee /usr/napc/rsync_scripts/last.log
+echo /mn_raid2/audiovoxjobs/Jobs\ WIP/ >> /usr/napc/rsync_scripts/daily.log
+cat /usr/napc/rsync_scripts/last.log |grep sent >>  /usr/napc/rsync_scripts/daily.log
+cat /usr/napc/rsync_scripts/last.log |grep total >>  /usr/napc/rsync_scripts/daily.log
+cat /usr/napc/rsync_scripts/last.log |grep error >>  /usr/napc/rsync_scripts/daily.log
+#### gm paths
+####/usr/bin/rsync $RSYNC_ARGS $REMOTEHST1/gmnewsamerica/  /mn_raid1/3m/ | tee /usr/napc/rsync_scripts/last.log
+####echo /mn_raid2/gmnewsamerica/ >> /usr/napc/rsync_scripts/daily.log
+####cat /usr/napc/rsync_scripts/last.log |grep sent >>  /usr/napc/rsync_scripts/daily.log
+####cat /usr/napc/rsync_scripts/last.log |grep total >>  /usr/napc/rsync_scripts/daily.log
+####cat /usr/napc/rsync_scripts/last.log |grep error >>  /usr/napc/rsync_scripts/daily.log
+####/usr/bin/rsync $RSYNC_ARGS $REMOTEHST3/gmjobsarchive/  /mn_raid1/gmjobsarchive/ | tee /usr/napc/rsync_scripts/last.log
+####echo /mn_raid2/gmjobsarchive/ >> /usr/napc/rsync_scripts/daily.log
+####cat /usr/napc/rsync_scripts/last.log |grep sent >>  /usr/napc/rsync_scripts/daily.log
+####cat /usr/napc/rsync_scripts/last.log |grep total >>  /usr/napc/rsync_scripts/daily.log
+####cat /usr/napc/rsync_scripts/last.log |grep error >>  /usr/napc/rsync_scripts/daily.log
+####/usr/bin/rsync $RSYNC_ARGS $REMOTEHST1/generalmills/  /mn_raid1/generalmills/ | tee /usr/napc/rsync_scripts/last.log
+####echo /mn_raid2/generalmills/ >> /usr/napc/rsync_scripts/daily.log
+####cat /usr/napc/rsync_scripts/last.log |grep sent >>  /usr/napc/rsync_scripts/daily.log
+####cat /usr/napc/rsync_scripts/last.log |grep total >>  /usr/napc/rsync_scripts/daily.log
+####cat /usr/napc/rsync_scripts/last.log |grep error >>  /usr/napc/rsync_scripts/daily.log
+####/usr/bin/rsync $RSYNC_ARGS $REMOTEHST1/genmillsjobs/Jobs\ WIP/  /mn_raid1/genmillsjobs/Jobs\ WIP/ | tee /usr/napc/####rsync_scripts/last.log
+####echo /mn_raid2/genmillsjobs/Jobs\ WIP/ >> /usr/napc/rsync_scripts/daily.log
+####cat /usr/napc/rsync_scripts/last.log |grep sent >>  /usr/napc/rsync_scripts/daily.log
+####cat /usr/napc/rsync_scripts/last.log |grep total >>  /usr/napc/rsync_scripts/daily.log
+####cat /usr/napc/rsync_scripts/last.log |grep error >>  /usr/napc/rsync_scripts/daily.log
+####/usr/bin/rsync $RSYNC_ARGS $REMOTEHST2/yoplait/  /mn_raid2/yoplait/ | tee /usr/napc/rsync_scripts/last.log
+####echo /mn_raid2/yoplait/ >> /usr/napc/rsync_scripts/daily.log
+####cat /usr/napc/rsync_scripts/last.log |grep sent >>  /usr/napc/rsync_scripts/daily.log
+####cat /usr/napc/rsync_scripts/last.log |grep total >>  /usr/napc/rsync_scripts/daily.log
+####cat /usr/napc/rsync_scripts/last.log |grep error >>  /usr/napc/rsync_scripts/daily.log
+
+echo end >> /usr/napc/rsync_scripts/Daily.rsync.log
+date >> /usr/napc/rsync_scripts/Daily.rsync.log
+
+echo rsync ends >> /usr/napc/rsync_scripts/daily.log
+date >> /usr/napc/rsync_scripts/daily.log
+
+###/usr/bin/Mail -s opus.rsync.log eroberts@napc.com dberks@schawk.com < /usr/napc/rsync_scripts/daily.log
+
+/usr/bin/Mail -s opus.rsync.log dberks@schawk.com < /usr/napc/rsync_scripts/daily.log

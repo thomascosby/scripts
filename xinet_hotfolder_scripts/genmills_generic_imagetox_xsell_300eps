@@ -1,0 +1,7 @@
+#!/bin/csh -f
+set d=/mn_raid2/auto/Input\ Hot\ Folders/Generic\ Cross\ Sells\ Gen\ Mills\ Staging 
+/usr/etc/appletalk/imagetox -xeps80 -r300 "$1" > "$d/$2:r".eps
+
+chmod 777 "$d/$2:r".eps
+chown root "$d/$2:r".eps
+chgrp weston_users "$d/$2:r".eps

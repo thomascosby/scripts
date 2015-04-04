@@ -1,0 +1,26 @@
+#  created 20140828 - tcosby
+#  This list can/should be adjusted as necessary.
+#  Currently it is configured for rsync to Penang
+#
+.*
+Staging/
+*/.*
+*/PDF\ Library
+*/*/.*
+*/*/*/.*
+*/*/*/*_P.psd
+*/*/*/*_p.psd
+*/*/*/*_P.PSD
+*/*/*/*_p.PSD
+*/*/*/*_P?.psd
+*/*/*/*_p?.psd
+*/*/*/*_P?.PSD
+*/*/*/*_p?.PSD
+*/*/*/*_P??.psd
+*/*/*/*_p??.psd
+*/*/*/*_P??.PSD
+*/*/*/*_p??.PSD
+*/*/*/*_P???.psd
+*/*/*/*_p???.psd
+*/*/*/*_P???.PSD
+*/*/*/*_p???.PSD

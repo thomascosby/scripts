@@ -1,0 +1,159 @@
+use chroot = false
+strict modes = false
+# hosts allow = *
+log file = rsyncd.log
+read only = false
+transfer logging = yes
+
+# Module definitions
+# Remember cygwin naming conventions : c:\work becomes /cygwin/c/work
+#
+#[sample]
+#path = /cygdrive/c/work
+#read only = false
+#transfer logging = yes
+#pid file = /var/run/rsyncd.pid
+#lock file = /var/run/rsync.lock
+
+# local test path
+#path = /cygdrive/C/Users/dberks/Documents/RsyncTest
+
+[rsync3mmpls]
+   path = /cygdrive/e/Minneapolis Prepress Master/3M_Masters/
+   comment = Rsync Mpls 3M Asset data to Schawk Penang PENGRSYNC01
+   uid = 0
+   gid = 0
+   read only = false
+   list = yes
+   hosts allow = 10.26.26.110
+   timeout = 600
+
+[rsyncgmmpls]
+   path = /cygdrive/e/Minneapolis Prepress Master/General_Mills_Masters/
+   comment = Rsync Mpls GM Asset data to Schawk Penang PENGRSYNC01
+   uid = 0
+   gid = 0
+   read only = false
+   list = yes
+   hosts allow = 10.26.26.110
+   timeout = 600
+
+[rsynccampls]
+   path = /cygdrive/e/Minneapolis Prepress Master/ConAgra_Masters/
+   comment = Rsync Mpls Con Agra Asset data to Schawk Penang PENGRSYNC01
+   uid = 0
+   gid = 0
+   read only = false
+   list = yes
+   hosts allow = 10.26.26.110
+   timeout = 600
+ 
+[rsyncdgmpls]
+   path = /cygdrive/e/Minneapolis Prepress Master/Dollar_General_Masters/
+   comment = Rsync Mpls Dollar General Asset data to Schawk Penang PENGRSYNC01
+   uid = 0
+   gid = 0
+   read only = false
+   list = yes
+   hosts allow = 10.26.26.110
+   timeout = 600
+
+ [rsyncdialmpls]
+   path = /cygdrive/e/Minneapolis Prepress Master/Dial_Masters/
+   comment = Rsync Mpls Dial Corrugated Asset and Dieline data to Schawk Penang PENGRSYNC01
+   uid = 0
+   gid = 0
+   read only = false
+   list = yes
+   hosts allow = 10.26.26.110
+   timeout = 600
+
+[rsyncdmmpls]
+   path = /cygdrive/e/Minneapolis Prepress Master/Other_Clients_Masters/PCBU93007/Images/Del Monte
+   comment = Rsync Mpls Del Monte Asset data to Schawk Penang PENGRSYNC01
+   uid = 0
+   gid = 0
+   read only = false
+   list = yes
+   hosts allow = 10.26.26.110
+   timeout = 600
+
+ [rsyncghbmpls]
+   path = /cygdrive/e/Minneapolis Prepress Master/GHB_Masters/
+   comment = Rsync Mpls GHB Asset data to Schawk Penang PENGRSYNC01
+   uid = 0
+   gid = 0
+   read only = false
+   list = yes
+   hosts allow = 10.26.26.110
+   timeout = 600
+
+[rsynchormelmpls]
+   path = /cygdrive/e/Minneapolis Prepress Master/Hormel_Masters/PCBU93007/Images/
+   comment = Rsync Mpls Hormel Asset data to Schawk Penang PENGRSYNC01
+   uid = 0
+   gid = 0
+   read only = false
+   list = yes
+   hosts allow = 10.26.26.110
+   timeout = 600
+
+[rsyncmerckmpls]
+   path = /cygdrive/e/Minneapolis Prepress Master/Merck_Masters/PCBU93007/Images/
+   comment = Rsync MPLS Merck Asset data to Schawk Penang PENGRSYNC01
+   uid = 0
+   gid = 0
+   read only = false
+   list = yes
+   hosts allow = 10.26.26.110
+   timeout = 600
+
+[rsynclegendmpls]
+   path = /cygdrive/e/Minneapolis Prepress Master/Legend_Maker
+   comment = Rsync Mpls "Legend Maker" folder to Schawk Penang PENGRSYNC01
+   uid = 0
+   gid = 0
+   read only = false
+   list = yes
+   hosts allow = 10.26.26.110
+   timeout = 600
+
+[rsyncnestlempls]
+   path = /cygdrive/e/Minneapolis Prepress Master/Nestle_Masters/
+   comment = Rsync Mpls Nestle Asset data to Schawk Penang PENGRSYNC01
+   uid = 0
+   gid = 0
+   read only = false
+   list = yes
+   hosts allow = 10.26.26.110
+   timeout = 600
+
+[rsyncswmpls]
+   path = /cygdrive/e/Minneapolis Prepress Master/Safeway_Masters/
+   comment = Rsync Mpls Safeway Asset data to Schawk Penang PENGRSYNC01
+   uid = 0
+   gid = 0
+   read only = false
+   list = yes
+   hosts allow = 10.26.26.110
+   timeout = 600
+
+ [rsynccinci]
+   path = /cygdrive/f/Containers/Cincinnati/C447_Images/
+   comment = Rsync Cinci447 Asset data to Schawk Penang PENGRSYNC01
+   uid = 0
+   gid = 0
+   read only = false
+   list = yes
+   hosts allow = 63.86.175.209,192.168.0.0/16
+   timeout = 600
+
+[rsynctorontomasters]
+   path = /cygdrive/e/Toronto Prepress Master/0_Toronto_Masters/
+   comment = Rsync Toronto Masters data to Schawk Penang PENGRSYNC01
+   uid = 0
+   gid = 0
+   read only = false
+   list = yes
+   hosts allow = 192.168.77.250
+   timeout = 600

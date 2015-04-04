@@ -1,0 +1,21 @@
+
+The asset_num_folder_maker script creates new numbered folders in all existing asset 
+Images folders. 
+
+The script prompts you to provide a new folder number (e.g. 6100). It validates 
+that you've entered a four digit number ending with two zeros. It then checks 
+(arbitrarily) to see if a numbered asset folder with this name already exist in 
+/mn_raid1/genmills/Assets/Baking/Images/. If it finds such a folder, it assumes this 
+number is already in use in ALL clients (since we add these numbers to all client 
+Images folders at the same time) and it bails.
+
+If a duplicate folder wasn't found in General Mills, the script creates the numbered 
+folder in every Images folder of every client, finishing up by setting the appropriate 
+ownership and permissions.
+
+NOTE THAT THIS SCRIPT MAY REQUIRE SUBSTANTIAL REWORKING AS A RESULT OF GFS. DO NOT RUN 
+IT POST-GFS UNLESS YOU'VE BEEN ADVISED THAT IT'S BEEN UDPATED.
+
+Dan Berks
+May 23, 2014
+
